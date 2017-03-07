@@ -12,6 +12,15 @@
 		02AD24CB1E6EA17D00B18028 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 02AD24C91E6EA17D00B18028 /* Main.storyboard */; };
 		02AD24CD1E6EA17D00B18028 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 02AD24CC1E6EA17D00B18028 /* Assets.xcassets */; };
 		02AD24D01E6EA17D00B18028 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 02AD24CE1E6EA17D00B18028 /* LaunchScreen.storyboard */; };
+		02AD24D81E6EA78200B18028 /* LHWActor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02AD24D71E6EA78200B18028 /* LHWActor.swift */; };
+		02AD24DA1E6EA7EE00B18028 /* LHWActionStage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02AD24D91E6EA7EE00B18028 /* LHWActionStage.swift */; };
+		02AD24DC1E6EA87500B18028 /* LHWHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02AD24DB1E6EA87500B18028 /* LHWHandler.swift */; };
+		02AD24DE1E6EA87D00B18028 /* LHWWatcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02AD24DD1E6EA87D00B18028 /* LHWWatcher.swift */; };
+		02AD24E01E6EA8D200B18028 /* LHWCommon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02AD24DF1E6EA8D200B18028 /* LHWCommon.swift */; };
+		02AD24E21E6EA8FF00B18028 /* LHWTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02AD24E11E6EA8FF00B18028 /* LHWTimer.swift */; };
+		02AD24E41E6EA92000B18028 /* LHWWeakProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02AD24E31E6EA92000B18028 /* LHWWeakProxy.swift */; };
+		02AD24E61E6EA96500B18028 /* LHWQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02AD24E51E6EA96500B18028 /* LHWQueue.swift */; };
+		02AD24E81E6EB1EF00B18028 /* LHWGraphNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02AD24E71E6EB1EF00B18028 /* LHWGraphNode.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -22,6 +31,15 @@
 		02AD24CC1E6EA17D00B18028 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		02AD24CF1E6EA17D00B18028 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		02AD24D11E6EA17D00B18028 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		02AD24D71E6EA78200B18028 /* LHWActor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LHWActor.swift; sourceTree = "<group>"; };
+		02AD24D91E6EA7EE00B18028 /* LHWActionStage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LHWActionStage.swift; sourceTree = "<group>"; };
+		02AD24DB1E6EA87500B18028 /* LHWHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LHWHandler.swift; sourceTree = "<group>"; };
+		02AD24DD1E6EA87D00B18028 /* LHWWatcher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LHWWatcher.swift; sourceTree = "<group>"; };
+		02AD24DF1E6EA8D200B18028 /* LHWCommon.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LHWCommon.swift; sourceTree = "<group>"; };
+		02AD24E11E6EA8FF00B18028 /* LHWTimer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LHWTimer.swift; sourceTree = "<group>"; };
+		02AD24E31E6EA92000B18028 /* LHWWeakProxy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LHWWeakProxy.swift; sourceTree = "<group>"; };
+		02AD24E51E6EA96500B18028 /* LHWQueue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LHWQueue.swift; sourceTree = "<group>"; };
+		02AD24E71E6EB1EF00B18028 /* LHWGraphNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LHWGraphNode.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,6 +78,15 @@
 				02AD24CC1E6EA17D00B18028 /* Assets.xcassets */,
 				02AD24CE1E6EA17D00B18028 /* LaunchScreen.storyboard */,
 				02AD24D11E6EA17D00B18028 /* Info.plist */,
+				02AD24D71E6EA78200B18028 /* LHWActor.swift */,
+				02AD24DF1E6EA8D200B18028 /* LHWCommon.swift */,
+				02AD24D91E6EA7EE00B18028 /* LHWActionStage.swift */,
+				02AD24DB1E6EA87500B18028 /* LHWHandler.swift */,
+				02AD24DD1E6EA87D00B18028 /* LHWWatcher.swift */,
+				02AD24E11E6EA8FF00B18028 /* LHWTimer.swift */,
+				02AD24E31E6EA92000B18028 /* LHWWeakProxy.swift */,
+				02AD24E51E6EA96500B18028 /* LHWQueue.swift */,
+				02AD24E71E6EB1EF00B18028 /* LHWGraphNode.swift */,
 			);
 			path = ActionStageSwift;
 			sourceTree = "<group>";
@@ -96,6 +123,7 @@
 				TargetAttributes = {
 					02AD24C11E6EA17D00B18028 = {
 						CreatedOnToolsVersion = 8.2.1;
+						DevelopmentTeam = 2L4985KKX7;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -136,6 +164,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				02AD24DC1E6EA87500B18028 /* LHWHandler.swift in Sources */,
+				02AD24DA1E6EA7EE00B18028 /* LHWActionStage.swift in Sources */,
+				02AD24DE1E6EA87D00B18028 /* LHWWatcher.swift in Sources */,
+				02AD24E01E6EA8D200B18028 /* LHWCommon.swift in Sources */,
+				02AD24E41E6EA92000B18028 /* LHWWeakProxy.swift in Sources */,
+				02AD24D81E6EA78200B18028 /* LHWActor.swift in Sources */,
+				02AD24E21E6EA8FF00B18028 /* LHWTimer.swift in Sources */,
+				02AD24E61E6EA96500B18028 /* LHWQueue.swift in Sources */,
+				02AD24E81E6EB1EF00B18028 /* LHWGraphNode.swift in Sources */,
 				02AD24C81E6EA17D00B18028 /* ViewController.swift in Sources */,
 				02AD24C61E6EA17D00B18028 /* AppDelegate.swift in Sources */,
 			);
@@ -258,6 +295,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = 2L4985KKX7;
 				INFOPLIST_FILE = ActionStageSwift/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.hanguang.app.ActionStageSwift;
@@ -270,6 +308,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = 2L4985KKX7;
 				INFOPLIST_FILE = ActionStageSwift/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.hanguang.app.ActionStageSwift;
