@@ -24,6 +24,68 @@
 
 import Foundation
 
-class LHWActor {
+class LHWActor: NSObject {
+    // MARK: -
+    private static var registeredRequestBuilders: Dictionary<String, AnyClass> = Dictionary<String, AnyClass>()
+    
+    var path: String
+    var requestQueueName: String? = nil
+    var storedOptions: Dictionary<String, Any> = Dictionary<String, Any>()
+    var requiresAuthorization: Bool = false
+    var cancelTimeout: TimeInterval
+    var cancelToken: Any? = nil
+    var multipleCancelTokens: [Any] = [Any]()
+    var cancelled: Bool = false
+    
+    required init(path: String) {
+        self.cancelTimeout = 0
+        self.path = path
+    }
+    
+    // MARK: -
+    class func registerActorClass(_ requestBuilderClass: AnyClass) {
+        guard let genericPath = requestBuilderClass.genericPath() else {
+            print("Error: LHWActor.registerActorClass: genericPath is nil")
+            return
+        }
+        
+        registeredRequestBuilders[genericPath] = requestBuilderClass
+    }
+    
+    class func requestBuilderForGenericPath(_ genericPath: String, path: String) -> LHWActor? {
+        let builderClass = registeredRequestBuilders[genericPath]
+        if builderClass != nil && builderClass is LHWActor.Type {
+            let builderInstance = (builderClass as! LHWActor.Type).init(path: path)
+            return builderInstance
+        } else {
+            return nil
+        }
+    }
+    
+    class func genericPath() -> String? {
+        print("Error: LHWActor.genericPath: no default implementation provided")
+        return nil
+    }
+    
+    // MARK: -
+    func prepare(options: Dictionary<String, Any>) {
+    }
+    
+    func execute(options: Dictionary<String, Any>) {
+    }
+    
+    func cancel() {
+        cancelled = true
+    }
+    
+    func addCancelToken(token: Any) {
+        multipleCancelTokens.append(token)
+    }
+    
+    func watcherJoined(watcherHandler: LHWHandler, options: Dictionary<String, Any>, waitingInActorQueue: Bool) {
+    }
+    
+    func handleRequestProblem() {
+    }
     
 }

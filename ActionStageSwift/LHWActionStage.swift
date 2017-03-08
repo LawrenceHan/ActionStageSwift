@@ -23,23 +23,31 @@
 // THE SOFTWARE.
 
 import Foundation
+import Darwin.os.lock
 
 enum LHWActionStageStatus: Int {
     case Success = 0
     case Failed = -1
 }
 
-final class LHWActionStage {
+enum LHWActorRequestFlags: Int {
+    case ChangePriority = 1
+}
+
+final class LHWActionStage: NSObject {
     // MARK: -
     static let LHWActionStageInstance = LHWActionStage()
+    static let globalFileManager: FileManager = FileManager()
+    
+    // MARK: -
     private let graphQueueSpecific = "com.hanguang.app.ActionStageSwift.graphdispatchqueue"
     private let graphQueueSpecificKey = DispatchSpecificKey<String>()
     private let mainGraphQueue: DispatchQueue
     let globalGraphQueue: DispatchQueue
     private let highPriorityGraphQueue: DispatchQueue
     
-    private let removeWatcherRequestsLock: OSSpinLock = OS_SPINLOCK_INIT
-    private let removeWatcherFromPathRequestsLock: OSSpinLock = OS_SPINLOCK_INIT
+    private let removeWatcherRequestsLock: os_unfair_lock = os_unfair_lock_s()
+    private let removeWatcherFromPathRequestsLock: os_unfair_lock = os_unfair_lock_s()
     
     private var _removeWatcherFromPathRequests: Array<(LHWHandler, String)>
     private var _removeWatcherRequests: Array<LHWHandler>
@@ -50,7 +58,7 @@ final class LHWActionStage {
     private var liveNodeWatchers: Dictionary<String, Array<LHWHandler>>
     private var actorMessagesWatchers: Dictionary<String, Array<LHWWatcher>>
     
-    private init() {
+    private override init() {
         requestQueues = [String: Array<LHWActor>]()
         activeRequests = [String: Any]()
         cancelRequestTimers = [String: Any]()
@@ -126,41 +134,150 @@ final class LHWActionStage {
     func dumpGraphState() {
         dispatchOnStageQueue {
             print("===== SGraph State =====")
-            print("\(self.liveNodeWatchers.count) live node watchers");
-            liveNodeWatchers.forEach({ ((path, watchers)) in
-                <#code#>
+            
+            print("\(self.liveNodeWatchers.count) live node watchers")
+            self.liveNodeWatchers.forEach({ (path, watchers) in
+                print("    \(path)")
+                for handler in watchers {
+                    if let watcher = handler.delegate {
+                        print("        \(watcher)")
+                    }
+                }
+            })
+                
+            print("\(self.activeRequests.count) requests")
+            self.activeRequests.forEach({ (path, obj) in
+                print("        \(path)")
             })
             
-            [_liveNodeWatchers enumerateKeysAndObjectsUsingBlock:^(NSString *path, NSArray *watchers, __unused BOOL *stop)
-                {
-                TGLog(@"    %@", path);
-                for (ASHandle *handle in watchers)
-                {
-                id<ASWatcher> watcher = handle.delegate;
-                if (watcher != nil)
-                {
-                TGLog(@"        %@", [watcher description]);
-                }
-                }
-                }];
-            TGLog(@"%d requests", _activeRequests.count);
-            [_activeRequests enumerateKeysAndObjectsUsingBlock:^(NSString *path, __unused id obj, __unused BOOL *stop) {
-                TGLog(@"        %@", path);
-                }];
-            TGLog(@"========================");
+            print("========================");
         }
     }
     
-    func globalFileManager() -> FileManager {
+    func genericStringForParametrizedPath(_ path: String) -> String {
+        if path.characters.count == 0 {
+            return ""
+        }
         
+        var newPath: String.CharacterView = String.CharacterView()
+        var skipCharacters: Bool = false;
+        var skippedCharacters: Bool = false;
+        
+        for c in path.characters {
+            if c == "(" {
+                skipCharacters = true
+                skippedCharacters = true
+                newPath.append("@")
+            } else if c == ")" {
+                skipCharacters = false
+            } else if !skipCharacters {
+                newPath.append(c)
+            }
+        }
+        
+        if !skippedCharacters {
+            return path
+        }
+        
+        let genericPath = String(newPath)
+        return genericPath
     }
     
-    func cancelActorTimeout(path: String) {
+    private func _requestGeneric(joinOnly: Bool, inCurrentQueue: Bool, path: String, options: [String: Any], flags: Int, watcher: LHWWatcher) {
+        let actionHandler = watcher.actionHandler
+        let requestClosure = {
+            if !actionHandler.hasDelegate() {
+                print("Error: \(#function):\(#line) actionHandler.delegate is nil")
+                return
+            }
+            
+            var activeRequests = self.activeRequests
+            let genericPath = self.genericStringForParametrizedPath(path)
+            var requestInfo: Dictionary<String, Any>? = activeRequests[path] as? Dictionary<String, Any>
+            
+            if joinOnly && requestInfo == nil { return }
+            
+            if requestInfo == nil {
+                if let requestBuilder = LHWActor.requestBuilderForGenericPath(genericPath, path: path) {
+                    let watchers = [actionHandler]
+                    
+                    requestInfo = [
+                        "requestBuilder": requestBuilder,
+                        "watchers": watchers
+                    ]
+                    
+                    activeRequests[path] = requestInfo
+                    
+                    requestBuilder.prepare(options: options)
+                    
+                    var executeNow = true
+                    if let requestQueueName = requestBuilder.requestQueueName {
+                        var requestQueue = self.requestQueues[requestQueueName]
+                        if requestQueue == nil {
+                            requestQueue = [requestBuilder]
+                            self.requestQueues[requestQueueName] = requestQueue
+                        } else {
+                            requestQueue?.append(requestBuilder)
+                            if requestQueue!.count > 1 {
+                                executeNow = false
+                                print("Adding request \(requestBuilder) to request queue \"\(requestQueueName)\"")
+                                
+                                if flags == LHWActorRequestFlags.ChangePriority.rawValue {
+                                    if requestQueue!.count > 2 {
+                                        requestQueue?.removeLast()
+                                        requestQueue?.insert(requestBuilder, at: 1)
+                                        
+                                        print("Inserted actor with high priority (next in queue)")
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    
+                    if executeNow {
+                        requestBuilder.execute(options: options)
+                    } else {
+                        requestBuilder.storedOptions = options
+                    }
+                } else {
+                    print("Error: request builder not found for \"\(path)\"")
+                }
+            } else {
+                var watchers = requestInfo?["watchers"] as! Array<LHWHandler>
+                if !(watchers.contains(actionHandler)) {
+                    print("Joining watcher to the wathcers of \"\(path)\"")
+                    watchers.append(actionHandler)
+                } else {
+                    print("Continue to watch for actor \"\(path)\"")
+                }
+                
+                let actor = requestInfo?["requestBuilder"] as! LHWActor
+                if actor.requestQueueName == nil {
+                    actor.watcherJoined(watcherHandler: actionHandler, options: options, waitingInActorQueue: false)
+                } else {
+                    var reuqestQueue = self.requestQueues[actor.requestQueueName!]
+                    if  reuqestQueue == nil || reuqestQueue?.count == 0 {
+                        actor.watcherJoined(watcherHandler: actionHandler, options: options, waitingInActorQueue: false)
+                    } else {
+                        let wait = reuqestQueue?[0] != actor
+                        actor.watcherJoined(watcherHandler: actionHandler, options: options, waitingInActorQueue: wait)
+                        
+                        if flags == LHWActorRequestFlags.ChangePriority.rawValue {
+                            self.changeActorPriority(path: path)
+                        }
+                    }
+                    
+                }
+            }
+        }
         
-    }
-    
-    func genericStringForParametrizedPath(path: String) -> String {
-        
+        if inCurrentQueue {
+            requestClosure()
+        } else {
+            dispatchOnStageQueue {
+                requestClosure()
+            }
+        }
     }
     
     func requestActor(path: String, options: Dictionary<String, Any>, flags: Int, watcher: LHWWatcher) {
@@ -172,15 +289,55 @@ final class LHWActionStage {
     }
     
     func changeActorPriority(path: String) {
-        
+        dispatchOnStageQueue {
+            if let requestInfo = self.activeRequests[path] as? [String: Any] {
+                let actor = requestInfo["requestBuilder"] as! LHWActor
+                if actor.requestQueueName != nil {
+                    var reuqestQueue = self.requestQueues[actor.requestQueueName!]
+                    if  reuqestQueue != nil || reuqestQueue?.count != 0 {
+                        if let index = reuqestQueue?.index(of: actor) {
+                            if index != 0 && index != 1 {
+                                reuqestQueue?.remove(at: index)
+                                reuqestQueue?.insert(actor, at: 1)
+                                
+                                print("Changed actor \(path) priority (next in \(actor.requestQueueName)")
+                            }
+                        }
+                    }
+                }
+            }
+            
+        }
     }
     
-    func rejoinActionsWithGenericPathNow(genericPath: String, prefix: String, watcher: LHWWatcher) {
+    func rejoinActionsWithGenericPathNow(genericPath: String, prefix: String, watcher: LHWWatcher) -> [String] {
+        let activeRequests = self.activeRequests
+        var rejoinPaths = [String]()
         
+        for path in activeRequests.keys {
+            if (path == genericPath) || (genericStringForParametrizedPath(path) == genericPath && (prefix.characters.count == 0 || path.hasPrefix(prefix))) {
+                rejoinPaths.append(path)
+            }
+        }
+        
+        for path in rejoinPaths {
+            self._requestGeneric(joinOnly: true, inCurrentQueue: true, path: path, options: [:], flags: 0, watcher: watcher)
+        }
+        
+        return rejoinPaths
     }
     
     func isExecutingActorsWithGenericPath(genericPath: String) -> Bool {
+        if !isCurrentQueueStageQueue() {
+            print("\(#function) should be called from graph queue")
+            return false
+        }
         
+        var result: Bool = false
+        
+        activeRequests.forEach { (path, requestInfo) in
+            <#code#>
+        }
     }
     
     func isExecutingActorsWithPathPrefix(pathPrefix: String) -> Bool {
