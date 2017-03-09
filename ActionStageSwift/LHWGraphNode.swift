@@ -8,10 +8,14 @@
 
 import Foundation
 
-class LHWGraphObjectNode : LHWGraphNode {
+@objc class LHWGraphObjectNode: LHWGraphNode {
+    var items: [Any] = [Any]()
     
+    init(items: [Any]) {
+        self.items = items
+    }
 }
 
-class LHWGraphNode {
+@objc class LHWGraphNode: NSObject {
     
 }

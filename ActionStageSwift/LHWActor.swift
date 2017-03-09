@@ -30,7 +30,7 @@ class LHWActor: NSObject {
     
     var path: String
     var requestQueueName: String? = nil
-    var storedOptions: Dictionary<String, Any> = Dictionary<String, Any>()
+    var storedOptions: Dictionary<String, Any>? = Dictionary<String, Any>()
     var requiresAuthorization: Bool = false
     var cancelTimeout: TimeInterval
     var cancelToken: Any? = nil
@@ -68,10 +68,10 @@ class LHWActor: NSObject {
     }
     
     // MARK: -
-    func prepare(options: Dictionary<String, Any>) {
+    func prepare(options: [String: Any]?) {
     }
     
-    func execute(options: Dictionary<String, Any>) {
+    func execute(options: [String: Any]?) {
     }
     
     func cancel() {

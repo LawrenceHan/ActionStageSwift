@@ -32,9 +32,10 @@ class LHWHandler: NSObject {
     private var _delegateLock: pthread_mutex_t
     // MARK: -
     init(delegate: LHWWatcher, releaseOnMainThread: Bool = false) {
-        _delegateLock = LHW_MUTEXLOCKER_INIT()
-        self.delegate = delegate
         self.releaseOnMainThread = releaseOnMainThread
+        _delegateLock = LHW_MUTEXLOCKER_INIT()
+        super.init()
+        self.delegate = delegate
     }
     
     // MARK: -
@@ -66,10 +67,8 @@ class LHWHandler: NSObject {
         }
     }
     
-    func receiveActorMessage(path: String, messageType: String, message: Any) {
-        guard let delegate = delegate else { return }
-        
-        delegate.actorMessageReceived?(path: path, messageType: messageType, message: message)
+    func receiveActorMessage(path: String, messageType: String? = nil, message: Any? = nil) {        
+        delegate?.actorMessageReceived?(path: path, messageType: messageType, message: message)
         
         if releaseOnMainThread && !Thread.isMainThread {
             DispatchQueue.main.async {

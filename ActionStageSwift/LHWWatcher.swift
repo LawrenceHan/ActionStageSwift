@@ -9,9 +9,9 @@
 import Foundation
 
 @objc protocol LHWWatcher {
-    var actionHandler: LHWHandler { get }
+    var actionHandler: LHWHandler? { get }
     
-    @objc optional func actorCompleted(status: Int, path: String, result: Any?)
+    @objc optional func actorCompleted(status: LHWActionStageStatus, path: String, result: Any?)
     @objc optional func actorReportedProgress(path: String, progress: Float)
     @objc optional func actionStageResourceDispatched(path: String, resource: Any?, arguments: Any?)
     @objc optional func actionStageActionRequested(_ action: String, options: Dictionary<String, Any>?)

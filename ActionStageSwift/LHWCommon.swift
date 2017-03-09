@@ -21,3 +21,24 @@ func LHW_MUTEXLOCKER_LOCK(_ lock: inout pthread_mutex_t) {
 func LHW_MUTEXLOCKER_UNLOCK(_ lock: inout pthread_mutex_t) {
     pthread_mutex_unlock(&lock)
 }
+
+func LHW_SPINLOCKER_INIT() -> OSSpinLock {
+    let spinLock = OS_SPINLOCK_INIT
+    return spinLock
+}
+
+func LHW_SPINLOCKER_LOCK(_ lock: inout OSSpinLock) {
+    OSSpinLockLock(&lock)
+}
+
+func LHW_SPINLOCKER_UNLOCK(_ lock: inout OSSpinLock) {
+    OSSpinLockUnlock(&lock)
+}
+
+extension Array where Element: AnyObject {
+    mutating func remove(object: Element) {
+        if let index = index(where: { $0 === object }) {
+            remove(at: index)
+        }
+    }
+}
