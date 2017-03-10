@@ -10,12 +10,13 @@ import Foundation
 
 class LHWHandler: NSObject {
     // MARK: -
+    private var _delegate: LHWWatcher?
     var delegate: LHWWatcher? {
         get {
             var result: LHWWatcher? = nil
             
             LHW_MUTEXLOCKER_LOCK(&_delegateLock)
-            result = self.delegate
+            result = _delegate
             LHW_MUTEXLOCKER_UNLOCK(&_delegateLock)
             
             return result
@@ -23,7 +24,7 @@ class LHWHandler: NSObject {
         
         set {
             LHW_MUTEXLOCKER_LOCK(&_delegateLock)
-            self.delegate = newValue
+            _delegate = newValue
             LHW_MUTEXLOCKER_UNLOCK(&_delegateLock)
         }
     }

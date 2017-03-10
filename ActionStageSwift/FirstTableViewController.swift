@@ -10,18 +10,17 @@ import UIKit
 
 class FirstTableViewController: UITableViewController, LHWWatcher {
 
-    var actionHandler: LHWHandler? = LHWHandler(delegate: self as! LHWWatcher)
+    var actionHandler: LHWHandler?
     var array: [String] = [String]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        actionHandler = LHWHandler(delegate: self)
         LHWActionStage.instance.watchForPath("/mg/newcell", watcher: self)
     }
     
     @IBAction func addCell(_ sender: UIBarButtonItem) {
         let text = "new cell"
-        array.append(text)
-        tableView.reloadData()
         LHWActionStage.instance.dispatchResource(path: "/mg/newcell", resource: text, arguments: nil)
     }
 
@@ -53,9 +52,11 @@ class FirstTableViewController: UITableViewController, LHWWatcher {
  
 
     func actionStageResourceDispatched(path: String, resource: Any?, arguments: Any?) {
-//        if path == "/mg/newcell" {
-//            tableView.reloadData()
-//        }
+        if path == "/mg/newcell" {
+            let text = resource as! String
+            array.append(text)
+            tableView.reloadData()
+        }
     }
     
     /*

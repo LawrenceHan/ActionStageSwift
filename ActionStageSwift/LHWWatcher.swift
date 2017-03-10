@@ -8,7 +8,7 @@
 
 import Foundation
 
-@objc protocol LHWWatcher {
+@objc protocol LHWWatcher: NSObjectProtocol {
     var actionHandler: LHWHandler? { get }
     
     @objc optional func actorCompleted(status: LHWActionStageStatus, path: String, result: Any?)

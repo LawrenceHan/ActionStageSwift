@@ -66,12 +66,8 @@ final class LHWActionStage: NSObject {
         actorMessagesWatchers = [String: [LHWHandler]]()
         
         mainGraphQueue = DispatchQueue(label: graphQueueSpecific)
-        
-        globalGraphQueue = DispatchQueue(label: graphQueueSpecific+"-global")
-        globalGraphQueue.setTarget(queue: mainGraphQueue)
-        
-        highPriorityGraphQueue = DispatchQueue(label: graphQueueSpecific+"-high")
-        highPriorityGraphQueue.setTarget(queue: mainGraphQueue)
+        globalGraphQueue = DispatchQueue(label: graphQueueSpecific+"-global", target: mainGraphQueue)
+        highPriorityGraphQueue = DispatchQueue(label: graphQueueSpecific+"-high", target: mainGraphQueue)
         
         mainGraphQueue.setSpecific(key: graphQueueSpecificKey, value: graphQueueSpecific)
         globalGraphQueue.setSpecific(key: graphQueueSpecificKey, value: graphQueueSpecific)
@@ -104,7 +100,7 @@ final class LHWActionStage: NSObject {
             #if DEBUG
                 let executionTime = CFAbsoluteTimeGetCurrent() - startTime
                 if executionTime > 0.1 {
-                    print("=== Dispatch took \(executionTime) s" )
+                    print("===== Dispatch took \(executionTime) s" )
                 }
             #endif
         } else {
@@ -114,7 +110,7 @@ final class LHWActionStage: NSObject {
                     closure()
                     let executionTime = CFAbsoluteTimeGetCurrent() - startTime
                     if executionTime > 0.1 {
-                        print("=== Dispatch took \(executionTime) s" )
+                        print("===== Dispatch took \(executionTime) s" )
                     }
                 }
             #else
@@ -273,7 +269,7 @@ final class LHWActionStage: NSObject {
     
     func watchForPath(_ path:String, watcher: LHWWatcher) {
         guard let actionHandler = watcher.actionHandler else {
-            print("=== Warning: actionHandler is nil in \(#function):\(#line)")
+            print("===== Warning: actionHandler is nil in \(#function):\(#line)")
             return
         }
         
@@ -292,7 +288,7 @@ final class LHWActionStage: NSObject {
     
     func watchForPaths(_ paths: Array<String>, watcher: LHWWatcher) {
         guard let actionHandler = watcher.actionHandler else {
-            print("=== Warning: actionHandler is nil in \(#function):\(#line)")
+            print("===== Warning: actionHandler is nil in \(#function):\(#line)")
             return
         }
         
@@ -313,7 +309,7 @@ final class LHWActionStage: NSObject {
     
     func watchForGenericPath(_ path: String, watcher: LHWWatcher) {
         guard let actionHandler = watcher.actionHandler else {
-            print("=== Warning: actionHandler is nil in \(#function):\(#line)")
+            print("===== Warning: actionHandler is nil in \(#function):\(#line)")
             return
         }
         
@@ -331,7 +327,7 @@ final class LHWActionStage: NSObject {
     
     func watchForMessagesToWatchersAtGenericPath(_ genericPath: String, watcher: LHWWatcher) {
         guard let actionHandler = watcher.actionHandler else {
-            print("=== Warning: actionHandler is nil in \(#function):\(#line)")
+            print("===== Warning: actionHandler is nil in \(#function):\(#line)")
             return
         }
         
@@ -698,7 +694,7 @@ final class LHWActionStage: NSObject {
     
     private func _requestGeneric(joinOnly: Bool, inCurrentQueue: Bool, path: String, options: [String: Any], flags: Int, watcher: LHWWatcher) {
         guard let actionHandler = watcher.actionHandler else {
-            print("=== Warning: actionHandler is nil in \(#function):\(#line)")
+            print("===== Warning: actionHandler is nil in \(#function):\(#line)")
             return
         }
         

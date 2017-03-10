@@ -10,11 +10,12 @@ import UIKit
 
 class SecondTableViewController: UITableViewController, LHWWatcher {
 
-    var actionHandler: LHWHandler? = LHWHandler(delegate: self as! LHWWatcher)
+    var actionHandler: LHWHandler?
     var array: [String] = [String]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        actionHandler = LHWHandler(delegate: self)
         LHWActionStage.instance.watchForPath("/mg/newcell", watcher: self)
     }
 
@@ -46,6 +47,8 @@ class SecondTableViewController: UITableViewController, LHWWatcher {
  
     func actionStageResourceDispatched(path: String, resource: Any?, arguments: Any?) {
         if path == "/mg/newcell" {
+            let text = resource as! String
+            array.append(text)
             tableView.reloadData()
         }
     }
