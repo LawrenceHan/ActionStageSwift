@@ -35,14 +35,13 @@ class LHWHandler: NSObject {
     init(delegate: LHWWatcher, releaseOnMainThread: Bool = false) {
         self.releaseOnMainThread = releaseOnMainThread
         _delegateLock = LHW_MUTEXLOCKER_INIT()
-        super.init()
-        self.delegate = delegate
+        self._delegate = delegate
     }
     
     // MARK: -
     func reset() {
         LHW_MUTEXLOCKER_LOCK(&_delegateLock)
-        delegate = nil
+        _delegate = nil
         LHW_MUTEXLOCKER_UNLOCK(&_delegateLock)
     }
     
@@ -50,42 +49,42 @@ class LHWHandler: NSObject {
         var result = false
         
         LHW_MUTEXLOCKER_LOCK(&_delegateLock)
-        result = delegate != nil
+        result = _delegate != nil
         LHW_MUTEXLOCKER_UNLOCK(&_delegateLock)
         
         return result
     }
     
     func requestAction(_ action: String, options: Dictionary<String, Any>) {
-        guard let delegate = delegate else { return }
+        guard let delegate = _delegate else { return }
         
         delegate.actionStageActionRequested?(action, options: options)
         
         if releaseOnMainThread && !Thread.isMainThread {
             DispatchQueue.main.async {
-                _ = self.delegate.self
+                _ = self._delegate.self
             }
         }
     }
     
     func receiveActorMessage(path: String, messageType: String? = nil, message: Any? = nil) {        
-        delegate?.actorMessageReceived?(path: path, messageType: messageType, message: message)
+        _delegate?.actorMessageReceived?(path: path, messageType: messageType, message: message)
         
         if releaseOnMainThread && !Thread.isMainThread {
             DispatchQueue.main.async {
-                _ = self.delegate.self
+                _ = self._delegate.self
             }
         }
     }
     
     func notifyResourceDispatched(path: String, resource: Any, arguments: Any? = nil) {
-        guard let delegate = delegate else { return }
+        guard let delegate = _delegate else { return }
         
         delegate.actionStageResourceDispatched?(path: path, resource: resource, arguments: arguments)
         
         if releaseOnMainThread && !Thread.isMainThread {
             DispatchQueue.main.async {
-                _ = self.delegate.self
+                _ = self._delegate.self
             }
         }
     }

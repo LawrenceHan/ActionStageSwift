@@ -20,8 +20,10 @@ class FirstTableViewController: UITableViewController, LHWWatcher {
     }
     
     @IBAction func addCell(_ sender: UIBarButtonItem) {
-        let text = "new cell \(array.count+1)"
-        LHWActionStage.instance.dispatchResource(path: "/mg/newcell", resource: text, arguments: nil)
+        LHWActionStage.instance.requestActor(path: "/mg/newcell", options: nil, watcher: self)
+        LHWActionStage.instance.requestActor(path: "/mg/newcell", options: nil, watcher: self)
+        LHWActionStage.instance.requestActor(path: "/mg/newcell", options: nil, watcher: self)
+        LHWActionStage.instance.requestActor(path: "/mg/newcell", options: nil, watcher: self)
     }
 
     override func didReceiveMemoryWarning() {

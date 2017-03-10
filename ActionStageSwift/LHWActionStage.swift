@@ -150,7 +150,7 @@ final class LHWActionStage: NSObject {
         return genericPath
     }
     
-    func requestActor(path: String, options: Dictionary<String, Any>, flags: Int = 0, watcher: LHWWatcher) {
+    func requestActor(path: String, options: [String: Any]?, flags: Int = 0, watcher: LHWWatcher) {
         _requestGeneric(joinOnly: false, inCurrentQueue: false, path: path, options: options, flags: flags, watcher: watcher)
     }
     
@@ -774,7 +774,7 @@ final class LHWActionStage: NSObject {
         }
     }
     
-    private func _requestGeneric(joinOnly: Bool, inCurrentQueue: Bool, path: String, options: [String: Any], flags: Int, watcher: LHWWatcher) {
+    private func _requestGeneric(joinOnly: Bool, inCurrentQueue: Bool, path: String, options: [String: Any]?, flags: Int, watcher: LHWWatcher) {
         guard let actionHandler = watcher.actionHandler else {
             print("===== Warning: actionHandler is nil in \(#function):\(#line)")
             return

@@ -26,11 +26,11 @@ import Foundation
 
 class LHWActor: NSObject {
     // MARK: -
-    private static var registeredRequestBuilders: Dictionary<String, AnyClass> = Dictionary<String, AnyClass>()
+    private static var registeredRequestBuilders: [String: AnyClass] = [String: AnyClass]()
     
     var path: String
     var requestQueueName: String? = nil
-    var storedOptions: Dictionary<String, Any>? = Dictionary<String, Any>()
+    var storedOptions: [String: Any]? = [String: Any]()
     var requiresAuthorization: Bool = false
     var cancelTimeout: TimeInterval
     var cancelToken: Any? = nil
@@ -82,7 +82,7 @@ class LHWActor: NSObject {
         multipleCancelTokens.append(token)
     }
     
-    func watcherJoined(watcherHandler: LHWHandler, options: Dictionary<String, Any>, waitingInActorQueue: Bool) {
+    func watcherJoined(watcherHandler: LHWHandler, options: [String: Any]?, waitingInActorQueue: Bool) {
     }
     
     func handleRequestProblem() {

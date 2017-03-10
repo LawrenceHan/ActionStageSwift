@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		021305D81E72AEC700FA05E2 /* AddCellActor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 021305D71E72AEC700FA05E2 /* AddCellActor.swift */; };
 		0233BF261E7257E2001168D5 /* FirstTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0233BF251E7257E2001168D5 /* FirstTableViewController.swift */; };
 		0233BF281E7257E9001168D5 /* SecondTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0233BF271E7257E9001168D5 /* SecondTableViewController.swift */; };
 		0233BF321E7272F9001168D5 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0233BF311E7272F9001168D5 /* Launch Screen.storyboard */; };
@@ -26,6 +27,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		021305D71E72AEC700FA05E2 /* AddCellActor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddCellActor.swift; sourceTree = "<group>"; };
 		0233BF251E7257E2001168D5 /* FirstTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirstTableViewController.swift; sourceTree = "<group>"; };
 		0233BF271E7257E9001168D5 /* SecondTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SecondTableViewController.swift; sourceTree = "<group>"; };
 		0233BF311E7272F9001168D5 /* Launch Screen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = "Launch Screen.storyboard"; path = "../Launch Screen.storyboard"; sourceTree = "<group>"; };
@@ -85,6 +87,7 @@
 				02AD24CC1E6EA17D00B18028 /* Assets.xcassets */,
 				02AD24D11E6EA17D00B18028 /* Info.plist */,
 				02AD24D71E6EA78200B18028 /* LHWActor.swift */,
+				021305D71E72AEC700FA05E2 /* AddCellActor.swift */,
 				02AD24DF1E6EA8D200B18028 /* LHWCommon.swift */,
 				02AD24D91E6EA7EE00B18028 /* LHWActionStage.swift */,
 				02AD24DB1E6EA87500B18028 /* LHWHandler.swift */,
@@ -175,6 +178,7 @@
 				02AD24DA1E6EA7EE00B18028 /* LHWActionStage.swift in Sources */,
 				02AD24DE1E6EA87D00B18028 /* LHWWatcher.swift in Sources */,
 				02AD24E01E6EA8D200B18028 /* LHWCommon.swift in Sources */,
+				021305D81E72AEC700FA05E2 /* AddCellActor.swift in Sources */,
 				02AD24E41E6EA92000B18028 /* LHWWeakProxy.swift in Sources */,
 				02AD24D81E6EA78200B18028 /* LHWActor.swift in Sources */,
 				02AD24E21E6EA8FF00B18028 /* LHWTimer.swift in Sources */,
