@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0233BF261E7257E2001168D5 /* FirstTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0233BF251E7257E2001168D5 /* FirstTableViewController.swift */; };
+		0233BF281E7257E9001168D5 /* SecondTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0233BF271E7257E9001168D5 /* SecondTableViewController.swift */; };
 		02AD24C61E6EA17D00B18028 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02AD24C51E6EA17D00B18028 /* AppDelegate.swift */; };
 		02AD24C81E6EA17D00B18028 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02AD24C71E6EA17D00B18028 /* ViewController.swift */; };
 		02AD24CB1E6EA17D00B18028 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 02AD24C91E6EA17D00B18028 /* Main.storyboard */; };
@@ -24,6 +26,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0233BF251E7257E2001168D5 /* FirstTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirstTableViewController.swift; sourceTree = "<group>"; };
+		0233BF271E7257E9001168D5 /* SecondTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SecondTableViewController.swift; sourceTree = "<group>"; };
 		02AD24C21E6EA17D00B18028 /* ActionStageSwift.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ActionStageSwift.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		02AD24C51E6EA17D00B18028 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		02AD24C71E6EA17D00B18028 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -74,6 +78,8 @@
 			children = (
 				02AD24C51E6EA17D00B18028 /* AppDelegate.swift */,
 				02AD24C71E6EA17D00B18028 /* ViewController.swift */,
+				0233BF251E7257E2001168D5 /* FirstTableViewController.swift */,
+				0233BF271E7257E9001168D5 /* SecondTableViewController.swift */,
 				02AD24C91E6EA17D00B18028 /* Main.storyboard */,
 				02AD24CC1E6EA17D00B18028 /* Assets.xcassets */,
 				02AD24CE1E6EA17D00B18028 /* LaunchScreen.storyboard */,
@@ -164,6 +170,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0233BF281E7257E9001168D5 /* SecondTableViewController.swift in Sources */,
 				02AD24DC1E6EA87500B18028 /* LHWHandler.swift in Sources */,
 				02AD24DA1E6EA7EE00B18028 /* LHWActionStage.swift in Sources */,
 				02AD24DE1E6EA87D00B18028 /* LHWWatcher.swift in Sources */,
@@ -172,6 +179,7 @@
 				02AD24D81E6EA78200B18028 /* LHWActor.swift in Sources */,
 				02AD24E21E6EA8FF00B18028 /* LHWTimer.swift in Sources */,
 				02AD24E61E6EA96500B18028 /* LHWQueue.swift in Sources */,
+				0233BF261E7257E2001168D5 /* FirstTableViewController.swift in Sources */,
 				02AD24E81E6EB1EF00B18028 /* LHWGraphNode.swift in Sources */,
 				02AD24C81E6EA17D00B18028 /* ViewController.swift in Sources */,
 				02AD24C61E6EA17D00B18028 /* AppDelegate.swift in Sources */,
@@ -336,6 +344,7 @@
 				02AD24D61E6EA17D00B18028 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

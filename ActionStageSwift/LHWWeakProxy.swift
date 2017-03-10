@@ -7,3 +7,7 @@
 //
 
 import Foundation
+
+final class LHWWeakProxy: NSObject {
+    weak var object: AnyObject?
+}

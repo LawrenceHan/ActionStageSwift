@@ -125,39 +125,6 @@ final class LHWActionStage: NSObject {
         }
     }
     
-    private func dispatchOnHighPriorityQueue(_ closure: @escaping () -> Void) {
-        if isCurrentQueueStageQueue() {
-            closure()
-        } else {
-            highPriorityGraphQueue.async {
-                closure()
-            }
-        }
-    }
-    
-    private func dumpGraphState() {
-        dispatchOnStageQueue {
-            print("===== SGraph State =====")
-            
-            print("\(self.liveNodeWatchers.count) live node watchers")
-            for (path, watchers) in self.liveNodeWatchers {
-                print("    \(path)")
-                for handler in watchers {
-                    if let watcher = handler.delegate {
-                        print("        \(watcher)")
-                    }
-                }
-            }
-                
-            print("\(self.activeRequests.count) requests")
-            for (path, _) in self.activeRequests {
-                print("        \(path)")
-            }
-            
-            print("========================");
-        }
-    }
-    
     func genericStringForParametrizedPath(_ path: String) -> String {
         if path.characters.count == 0 {
             return ""
@@ -187,113 +154,8 @@ final class LHWActionStage: NSObject {
         return genericPath
     }
     
-    private func _requestGeneric(joinOnly: Bool, inCurrentQueue: Bool, path: String, options: [String: Any], flags: Int, watcher: LHWWatcher) {
-        guard let actionHandler = watcher.actionHandler else {
-            print("=== Warning: actionHandler is nil in \(#function):\(#line)")
-            return
-        }
-        
-        let requestClosure = {
-            if !actionHandler.hasDelegate() {
-                print("Error: \(#function):\(#line) actionHandler.delegate is nil")
-                return
-            }
-            
-            var activeRequests = self.activeRequests
-            let genericPath = self.genericStringForParametrizedPath(path)
-            var requestInfo: Dictionary<String, Any>? = activeRequests[path] as? Dictionary<String, Any>
-            
-            if joinOnly && requestInfo == nil { return }
-            
-            if requestInfo == nil {
-                if let requestBuilder = LHWActor.requestBuilderForGenericPath(genericPath, path: path) {
-                    let watchers = [actionHandler]
-                    
-                    requestInfo = [
-                        "requestBuilder": requestBuilder,
-                        "watchers": watchers
-                    ]
-                    
-                    activeRequests[path] = requestInfo
-                    
-                    requestBuilder.prepare(options: options)
-                    
-                    var executeNow = true
-                    if let requestQueueName = requestBuilder.requestQueueName {
-                        var requestQueue = self.requestQueues[requestQueueName]
-                        if requestQueue == nil {
-                            requestQueue = [requestBuilder]
-                            self.requestQueues[requestQueueName] = requestQueue
-                        } else {
-                            requestQueue?.append(requestBuilder)
-                            if requestQueue!.count > 1 {
-                                executeNow = false
-                                print("Adding request \(requestBuilder) to request queue \"\(requestQueueName)\"")
-                                
-                                if flags == LHWActorRequestFlags.ChangePriority.rawValue {
-                                    if requestQueue!.count > 2 {
-                                        requestQueue?.removeLast()
-                                        requestQueue?.insert(requestBuilder, at: 1)
-                                        
-                                        print("Inserted actor with high priority (next in queue)")
-                                    }
-                                }
-                            }
-                        }
-                    }
-                    
-                    if executeNow {
-                        requestBuilder.execute(options: options)
-                    } else {
-                        requestBuilder.storedOptions = options
-                    }
-                } else {
-                    print("Error: request builder not found for \"\(path)\"")
-                }
-            } else {
-                var watchers = requestInfo?["watchers"] as! Array<LHWHandler>
-                if !(watchers.contains(actionHandler)) {
-                    print("Joining watcher to the wathcers of \"\(path)\"")
-                    watchers.append(actionHandler)
-                } else {
-                    print("Continue to watch for actor \"\(path)\"")
-                }
-                
-                let actor = requestInfo?["requestBuilder"] as! LHWActor
-                if actor.requestQueueName == nil {
-                    actor.watcherJoined(watcherHandler: actionHandler, options: options, waitingInActorQueue: false)
-                } else {
-                    var reuqestQueue = self.requestQueues[actor.requestQueueName!]
-                    if  reuqestQueue == nil || reuqestQueue?.count == 0 {
-                        actor.watcherJoined(watcherHandler: actionHandler, options: options, waitingInActorQueue: false)
-                    } else {
-                        let wait = reuqestQueue?[0] != actor
-                        actor.watcherJoined(watcherHandler: actionHandler, options: options, waitingInActorQueue: wait)
-                        
-                        if flags == LHWActorRequestFlags.ChangePriority.rawValue {
-                            self.changeActorPriority(path: path)
-                        }
-                    }
-                    
-                }
-            }
-        }
-        
-        if inCurrentQueue {
-            requestClosure()
-        } else {
-            dispatchOnStageQueue {
-                requestClosure()
-            }
-        }
-    }
-    
-    func requestActor(path: String, options: Dictionary<String, Any>, flags: Int, watcher: LHWWatcher) {
+    func requestActor(path: String, options: Dictionary<String, Any>, flags: Int = 0, watcher: LHWWatcher) {
         _requestGeneric(joinOnly: false, inCurrentQueue: false, path: path, options: options, flags: flags, watcher: watcher)
-    }
-    
-    func requestActor(path: String, options: Dictionary<String, Any>, watcher: LHWWatcher) {
-        _requestGeneric(joinOnly: false, inCurrentQueue: false, path: path, options: options, flags: 0, watcher: watcher)
     }
     
     func changeActorPriority(path: String) {
@@ -484,46 +346,7 @@ final class LHWActionStage: NSObject {
         }
     }
     
-    func removeRequestFromQueueAndProceedIfFirst(name: String, fromRequestBuilder requestBuilder: LHWActor) {
-        var requestQueueName = requestBuilder.requestQueueName
-        if requestQueueName == nil {
-            requestQueueName = name
-        }
-        
-        if var requestQueue = requestQueues[requestQueueName!] {
-            if requestQueue.count == 0 {
-                print("***** Warning ***** request queue \"\(requestBuilder.requestQueueName) is empty.\"")
-            } else {
-                if requestQueue[0] == requestBuilder {
-                    requestQueue.remove(at: 0)
-                    
-                    if requestQueue.count != 0 {
-                        let nextRequest = requestQueue[0]
-                        let nextRequestOptions = nextRequest.storedOptions
-                        nextRequest.storedOptions = nil
-                        
-                        if !nextRequest.cancelled {
-                            nextRequest.execute(options: nextRequestOptions)
-                        }
-                    } else {
-                        requestQueues.removeValue(forKey: requestBuilder.requestQueueName!)
-                    }
-                } else {
-                    if requestQueue.contains(requestBuilder) {
-                        if let index = requestQueue.index(of: requestBuilder) {
-                            requestQueue.remove(at: index)
-                        }
-                    } else {
-                        print("===== Warning request queue \"\(requestBuilder.requestQueueName)\" doesn't contain request to \(requestBuilder.path)")
-                    }
-                }
-            }
-        } else {
-            print("Warning: requestQueue is nil")
-        }
-    }
-    
-    func removeWatcherByHandle(_ actionHandler: LHWHandler) {
+    func removeWatcherByHandler(_ actionHandler: LHWHandler) {
         var alreadyExecuting = false
         LHW_SPINLOCKER_LOCK(&removeWatcherRequestsLock)
         if !_removeWatcherRequests.isEmpty {
@@ -595,10 +418,10 @@ final class LHWActionStage: NSObject {
     }
     
     func removeWatcher(_ watcher: LHWWatcher) {
-        removeWatcherByHandle(watcher.actionHandler!)
+        removeWatcherByHandler(watcher.actionHandler!)
     }
     
-    func removeWatcherByHandle(_ actionHandler: LHWHandler, fromPath: String) {
+    func removeWatcherByHandler(_ actionHandler: LHWHandler, fromPath: String) {
         var alreadyExecuting = false
         LHW_SPINLOCKER_LOCK(&removeWatcherFromPathRequestsLock)
         if !_removeWatcherFromPathRequests.isEmpty {
@@ -672,7 +495,7 @@ final class LHWActionStage: NSObject {
     
     func removeWatcher(_ watcher: LHWWatcher, fromPath: String) {
         if let handler = watcher.actionHandler {
-            removeWatcherByHandle(handler, fromPath: fromPath)
+            removeWatcherByHandler(handler, fromPath: fromPath)
         }
     }
     
@@ -690,12 +513,10 @@ final class LHWActionStage: NSObject {
         if let _ = activeRequests[path] {
             return true
         }
-        
         return false
     }
     
-    // MARK: -
-    func dispatchResource(path: String, resource: Any?, arguments: Any? = nil) {
+    func dispatchResource(path: String, resource: Any? = nil, arguments: Any? = nil) {
         dispatchOnStageQueue {
             let genericPath = self.genericStringForParametrizedPath(path)
             
@@ -841,7 +662,181 @@ final class LHWActionStage: NSObject {
         actionFailed(path, reason: .Failed)
     }
     
-    func scheduleCancelRequest(path: String) {
+    // MARK: -
+    private func dispatchOnHighPriorityQueue(_ closure: @escaping () -> Void) {
+        if isCurrentQueueStageQueue() {
+            closure()
+        } else {
+            highPriorityGraphQueue.async {
+                closure()
+            }
+        }
+    }
+    
+    private func dumpGraphState() {
+        dispatchOnStageQueue {
+            print("===== SGraph State =====")
+            
+            print("\(self.liveNodeWatchers.count) live node watchers")
+            for (path, watchers) in self.liveNodeWatchers {
+                print("    \(path)")
+                for handler in watchers {
+                    if let watcher = handler.delegate {
+                        print("        \(watcher)")
+                    }
+                }
+            }
+            
+            print("\(self.activeRequests.count) requests")
+            for (path, _) in self.activeRequests {
+                print("        \(path)")
+            }
+            
+            print("========================");
+        }
+    }
+    
+    private func _requestGeneric(joinOnly: Bool, inCurrentQueue: Bool, path: String, options: [String: Any], flags: Int, watcher: LHWWatcher) {
+        guard let actionHandler = watcher.actionHandler else {
+            print("=== Warning: actionHandler is nil in \(#function):\(#line)")
+            return
+        }
+        
+        let requestClosure = {
+            if !actionHandler.hasDelegate() {
+                print("Error: \(#function):\(#line) actionHandler.delegate is nil")
+                return
+            }
+            
+            var activeRequests = self.activeRequests
+            let genericPath = self.genericStringForParametrizedPath(path)
+            var requestInfo: Dictionary<String, Any>? = activeRequests[path] as? Dictionary<String, Any>
+            
+            if joinOnly && requestInfo == nil { return }
+            
+            if requestInfo == nil {
+                if let requestBuilder = LHWActor.requestBuilderForGenericPath(genericPath, path: path) {
+                    let watchers = [actionHandler]
+                    
+                    requestInfo = [
+                        "requestBuilder": requestBuilder,
+                        "watchers": watchers
+                    ]
+                    
+                    activeRequests[path] = requestInfo
+                    
+                    requestBuilder.prepare(options: options)
+                    
+                    var executeNow = true
+                    if let requestQueueName = requestBuilder.requestQueueName {
+                        var requestQueue = self.requestQueues[requestQueueName]
+                        if requestQueue == nil {
+                            requestQueue = [requestBuilder]
+                            self.requestQueues[requestQueueName] = requestQueue
+                        } else {
+                            requestQueue?.append(requestBuilder)
+                            if requestQueue!.count > 1 {
+                                executeNow = false
+                                print("Adding request \(requestBuilder) to request queue \"\(requestQueueName)\"")
+                                
+                                if flags == LHWActorRequestFlags.ChangePriority.rawValue {
+                                    if requestQueue!.count > 2 {
+                                        requestQueue?.removeLast()
+                                        requestQueue?.insert(requestBuilder, at: 1)
+                                        
+                                        print("Inserted actor with high priority (next in queue)")
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    
+                    if executeNow {
+                        requestBuilder.execute(options: options)
+                    } else {
+                        requestBuilder.storedOptions = options
+                    }
+                } else {
+                    print("Error: request builder not found for \"\(path)\"")
+                }
+            } else {
+                var watchers = requestInfo?["watchers"] as! Array<LHWHandler>
+                if !(watchers.contains(actionHandler)) {
+                    print("Joining watcher to the wathcers of \"\(path)\"")
+                    watchers.append(actionHandler)
+                } else {
+                    print("Continue to watch for actor \"\(path)\"")
+                }
+                
+                let actor = requestInfo?["requestBuilder"] as! LHWActor
+                if actor.requestQueueName == nil {
+                    actor.watcherJoined(watcherHandler: actionHandler, options: options, waitingInActorQueue: false)
+                } else {
+                    var reuqestQueue = self.requestQueues[actor.requestQueueName!]
+                    if  reuqestQueue == nil || reuqestQueue?.count == 0 {
+                        actor.watcherJoined(watcherHandler: actionHandler, options: options, waitingInActorQueue: false)
+                    } else {
+                        let wait = reuqestQueue?[0] != actor
+                        actor.watcherJoined(watcherHandler: actionHandler, options: options, waitingInActorQueue: wait)
+                        
+                        if flags == LHWActorRequestFlags.ChangePriority.rawValue {
+                            self.changeActorPriority(path: path)
+                        }
+                    }
+                    
+                }
+            }
+        }
+        
+        if inCurrentQueue {
+            requestClosure()
+        } else {
+            dispatchOnStageQueue {
+                requestClosure()
+            }
+        }
+    }
+    
+    private func removeRequestFromQueueAndProceedIfFirst(name: String, fromRequestBuilder requestBuilder: LHWActor) {
+        var requestQueueName = requestBuilder.requestQueueName
+        if requestQueueName == nil {
+            requestQueueName = name
+        }
+        
+        if var requestQueue = requestQueues[requestQueueName!] {
+            if requestQueue.count == 0 {
+                print("***** Warning ***** request queue \"\(requestBuilder.requestQueueName) is empty.\"")
+            } else {
+                if requestQueue[0] == requestBuilder {
+                    requestQueue.remove(at: 0)
+                    
+                    if requestQueue.count != 0 {
+                        let nextRequest = requestQueue[0]
+                        let nextRequestOptions = nextRequest.storedOptions
+                        nextRequest.storedOptions = nil
+                        
+                        if !nextRequest.cancelled {
+                            nextRequest.execute(options: nextRequestOptions)
+                        }
+                    } else {
+                        requestQueues.removeValue(forKey: requestBuilder.requestQueueName!)
+                    }
+                } else {
+                    if requestQueue.contains(requestBuilder) {
+                        if let index = requestQueue.index(of: requestBuilder) {
+                            requestQueue.remove(at: index)
+                        }
+                    } else {
+                        print("===== Warning request queue \"\(requestBuilder.requestQueueName)\" doesn't contain request to \(requestBuilder.path)")
+                    }
+                }
+            }
+        } else {
+            print("Warning: requestQueue is nil")
+        }
+    }
+    
+    private func scheduleCancelRequest(path: String) {
         var activeRequests = self.activeRequests
         if var requestInfo = activeRequests[path] as? [String: Any] {
             let requestBuilder = requestInfo["requestBuilder"] as! LHWActor
