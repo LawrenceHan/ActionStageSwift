@@ -8,16 +8,14 @@
 
 import UIKit
 
-class SecondTableViewController: UITableViewController {
+class SecondTableViewController: UITableViewController, LHWWatcher {
 
+    var actionHandler: LHWHandler? = LHWHandler(delegate: self as! LHWWatcher)
+    var array: [String] = [String]()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem()
+        LHWActionStage.instance.watchForPath("/mg/newcell", watcher: self)
     }
 
     override func didReceiveMemoryWarning() {
@@ -29,23 +27,28 @@ class SecondTableViewController: UITableViewController {
 
     override func numberOfSections(in tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
-        return 0
+        return 1
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return 0
+        return array.count
     }
 
-    /*
+    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: "cell2", for: indexPath)
 
-        // Configure the cell...
+        cell.textLabel?.text = array[indexPath.row]
 
         return cell
     }
-    */
+ 
+    func actionStageResourceDispatched(path: String, resource: Any?, arguments: Any?) {
+        if path == "/mg/newcell" {
+            tableView.reloadData()
+        }
+    }
 
     /*
     // Override to support conditional editing of the table view.

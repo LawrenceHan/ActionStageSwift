@@ -36,7 +36,7 @@ enum LHWActorRequestFlags: Int {
 
 final class LHWActionStage: NSObject {
     // MARK: -
-    static let LHWActionStageInstance = LHWActionStage()
+    static let instance = LHWActionStage()
     static let globalFileManager: FileManager = FileManager()
     
     // MARK: -
