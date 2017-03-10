@@ -15,14 +15,21 @@ class AddCellActor: LHWActor {
 //    }
     
     override class func genericPath() -> String? {
-        return "/mg/newcell"
+        return "/mg/newcell/@"
     }
     
     override func execute(options: [String: Any]?) {
-        let text = "new cell"
-        LHWActionStage.instance.dispatchResource(path: "/mg/newcell", resource: text, arguments: nil)
+        guard let options = options else {
+            return
+        }
+        
+        guard let text = options["text"] as? String else {
+            return
+        }
+        
+        LHWActionStage.instance.dispatchResource(path: path, resource: text, arguments: nil)
         DispatchQueue.global().asyncAfter(deadline: .now() + 0.1) {
-            LHWActionStage.instance.actionCompleted("/mg/newcell")
+            LHWActionStage.instance.actionCompleted(self.path)
         }
     }
 }

@@ -16,7 +16,7 @@ class SecondTableViewController: UITableViewController, LHWWatcher {
     override func viewDidLoad() {
         super.viewDidLoad()
         actionHandler = LHWHandler(delegate: self)
-        LHWActionStage.instance.watchForPath("/mg/newcell", watcher: self)
+        LHWActionStage.instance.watchForGenericPath("/mg/newcell/@", watcher: self)
     }
 
     override func didReceiveMemoryWarning() {
@@ -46,7 +46,7 @@ class SecondTableViewController: UITableViewController, LHWWatcher {
     }
  
     func actionStageResourceDispatched(path: String, resource: Any?, arguments: Any?) {
-        if path == "/mg/newcell" {
+        if path.hasPrefix("/mg/newcell") {
             let text = resource as! String
             array.append(text)
             

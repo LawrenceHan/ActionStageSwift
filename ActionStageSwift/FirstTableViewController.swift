@@ -16,14 +16,12 @@ class FirstTableViewController: UITableViewController, LHWWatcher {
     override func viewDidLoad() {
         super.viewDidLoad()
         actionHandler = LHWHandler(delegate: self)
-        LHWActionStage.instance.watchForPath("/mg/newcell", watcher: self)
+        LHWActionStage.instance.watchForPath("/mg/newcell/(11)", watcher: self)
     }
     
     @IBAction func addCell(_ sender: UIBarButtonItem) {
-        LHWActionStage.instance.requestActor(path: "/mg/newcell", options: nil, watcher: self)
-        LHWActionStage.instance.requestActor(path: "/mg/newcell", options: nil, watcher: self)
-        LHWActionStage.instance.requestActor(path: "/mg/newcell", options: nil, watcher: self)
-        LHWActionStage.instance.requestActor(path: "/mg/newcell", options: nil, watcher: self)
+        let options = ["text": "new cell \(array.count+1)"]
+        LHWActionStage.instance.requestActor(path: "/mg/newcell/(11)", options: options, watcher: self)
     }
 
     override func didReceiveMemoryWarning() {
@@ -54,7 +52,7 @@ class FirstTableViewController: UITableViewController, LHWWatcher {
  
 
     func actionStageResourceDispatched(path: String, resource: Any?, arguments: Any?) {
-        if path == "/mg/newcell" {
+        if path == "/mg/newcell/(11)" {
             let text = resource as! String
             array.append(text)
             
