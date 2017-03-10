@@ -6,8 +6,9 @@
 //  Copyright © 2017年 Hanguang. All rights reserved.
 //
 
-import Darwin
+import Foundation
 
+// MRAK: -
 func LHW_MUTEXLOCKER_INIT() -> pthread_mutex_t {
     var mutex: pthread_mutex_t = pthread_mutex_t()
     pthread_mutex_init(&mutex, nil)
@@ -35,6 +36,17 @@ func LHW_SPINLOCKER_UNLOCK(_ lock: inout OSSpinLock) {
     OSSpinLockUnlock(&lock)
 }
 
+func LHWDispatchOnMainThread(_ closure: @escaping () -> Void) {
+    if Thread.isMainThread {
+        closure()
+    } else {
+        DispatchQueue.main.async {
+            closure()
+        }
+    }
+}
+
+// MRAK: -
 extension Array where Element: AnyObject {
     mutating func remove(object: Element) {
         if let index = index(where: { $0 === object }) {

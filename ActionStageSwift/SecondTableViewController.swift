@@ -49,7 +49,10 @@ class SecondTableViewController: UITableViewController, LHWWatcher {
         if path == "/mg/newcell" {
             let text = resource as! String
             array.append(text)
-            tableView.reloadData()
+            
+            LHWDispatchOnMainThread {
+                self.tableView.reloadData()
+            }
         }
     }
 

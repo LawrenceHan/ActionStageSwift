@@ -20,7 +20,7 @@ class FirstTableViewController: UITableViewController, LHWWatcher {
     }
     
     @IBAction func addCell(_ sender: UIBarButtonItem) {
-        let text = "new cell"
+        let text = "new cell \(array.count+1)"
         LHWActionStage.instance.dispatchResource(path: "/mg/newcell", resource: text, arguments: nil)
     }
 
@@ -55,7 +55,10 @@ class FirstTableViewController: UITableViewController, LHWWatcher {
         if path == "/mg/newcell" {
             let text = resource as! String
             array.append(text)
-            tableView.reloadData()
+            
+            LHWDispatchOnMainThread {
+                self.tableView.reloadData()
+            }
         }
     }
     
