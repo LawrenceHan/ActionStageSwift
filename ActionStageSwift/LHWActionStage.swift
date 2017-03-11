@@ -82,7 +82,7 @@ final class LHWActionStage: NSObject {
         return globalGraphQueue
     }
     
-    func isCurrentQueueStageQueue() -> Bool { //
+    func isCurrentQueueStageQueue() -> Bool {
         return DispatchQueue.getSpecific(key: graphQueueSpecificKey) != nil
     }
     
@@ -100,7 +100,7 @@ final class LHWActionStage: NSObject {
             #if DEBUG
                 let executionTime = CFAbsoluteTimeGetCurrent() - startTime
                 if executionTime > 0.1 {
-                    print("===== Dispatch took \(executionTime) s" )
+                    print("===== ActionStage Dispatch took \(executionTime) s" )
                 }
             #endif
         } else {
@@ -110,7 +110,7 @@ final class LHWActionStage: NSObject {
                     closure()
                     let executionTime = CFAbsoluteTimeGetCurrent() - startTime
                     if executionTime > 0.1 {
-                        print("===== Dispatch took \(executionTime) s" )
+                        print("===== ActionStage Dispatch took \(executionTime) s" )
                     }
                 }
             #else
@@ -782,7 +782,7 @@ final class LHWActionStage: NSObject {
         
         let requestClosure = {
             if !actionHandler.hasDelegate() {
-                print("Error: \(#function):\(#line) actionHandler.delegate is nil")
+                print("===== Error: \(#function):\(#line) actionHandler.delegate is nil")
                 return
             }
             
@@ -888,12 +888,12 @@ final class LHWActionStage: NSObject {
         }
         
         guard var requestQueue = requestQueues[requestQueueName!] else {
-            print("Warning: requestQueue is nil")
+            print("===== Warning: requestQueue is nil")
             return
         }
         
         if requestQueue.count == 0 {
-            print("***** Warning ***** request queue \"\(requestBuilder.requestQueueName) is empty.\"")
+            print("===== Warning request queue \"\(requestBuilder.requestQueueName) is empty.\"")
         } else {
             if requestQueue[0] == requestBuilder {
                 requestQueue.remove(at: 0)
@@ -925,7 +925,7 @@ final class LHWActionStage: NSObject {
     
     private func scheduleCancelRequest(path: String) {
         guard var requestInfo = activeRequests[path] as? [String: Any] else {
-            print("Warning: cannot cancel request to \"\(path)\": no active request found")
+            print("===== Warning: cannot cancel request to \"\(path)\": no active request found")
             return
         }
         
@@ -937,7 +937,7 @@ final class LHWActionStage: NSObject {
         activeRequests.removeValue(forKey: path)
         
         requestBuilder.cancel()
-        print("Cancelled request to \"\(path)\"")
+        print("===== Cancelled request to \"\(path)\"")
         
         guard let requestQueueName = requestBuilder.requestQueueName else {
             return
