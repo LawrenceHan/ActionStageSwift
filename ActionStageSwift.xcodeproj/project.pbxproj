@@ -8,6 +8,15 @@
 
 /* Begin PBXBuildFile section */
 		021305D81E72AEC700FA05E2 /* AddCellActor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 021305D71E72AEC700FA05E2 /* AddCellActor.swift */; };
+		021306311E75303B00FA05E2 /* LHWActionStage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 021306281E75303B00FA05E2 /* LHWActionStage.swift */; };
+		021306321E75303B00FA05E2 /* LHWActor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 021306291E75303B00FA05E2 /* LHWActor.swift */; };
+		021306331E75303B00FA05E2 /* LHWCommon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0213062A1E75303B00FA05E2 /* LHWCommon.swift */; };
+		021306341E75303B00FA05E2 /* LHWGraphNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0213062B1E75303B00FA05E2 /* LHWGraphNode.swift */; };
+		021306351E75303B00FA05E2 /* LHWHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0213062C1E75303B00FA05E2 /* LHWHandler.swift */; };
+		021306361E75303B00FA05E2 /* LHWQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0213062D1E75303B00FA05E2 /* LHWQueue.swift */; };
+		021306371E75303B00FA05E2 /* LHWTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0213062E1E75303B00FA05E2 /* LHWTimer.swift */; };
+		021306381E75303B00FA05E2 /* LHWWatcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0213062F1E75303B00FA05E2 /* LHWWatcher.swift */; };
+		021306391E75303B00FA05E2 /* LHWWeakProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 021306301E75303B00FA05E2 /* LHWWeakProxy.swift */; };
 		0233BF261E7257E2001168D5 /* FirstTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0233BF251E7257E2001168D5 /* FirstTableViewController.swift */; };
 		0233BF281E7257E9001168D5 /* SecondTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0233BF271E7257E9001168D5 /* SecondTableViewController.swift */; };
 		0233BF321E7272F9001168D5 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0233BF311E7272F9001168D5 /* Launch Screen.storyboard */; };
@@ -15,19 +24,19 @@
 		02AD24C81E6EA17D00B18028 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02AD24C71E6EA17D00B18028 /* ViewController.swift */; };
 		02AD24CB1E6EA17D00B18028 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 02AD24C91E6EA17D00B18028 /* Main.storyboard */; };
 		02AD24CD1E6EA17D00B18028 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 02AD24CC1E6EA17D00B18028 /* Assets.xcassets */; };
-		02AD24D81E6EA78200B18028 /* LHWActor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02AD24D71E6EA78200B18028 /* LHWActor.swift */; };
-		02AD24DA1E6EA7EE00B18028 /* LHWActionStage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02AD24D91E6EA7EE00B18028 /* LHWActionStage.swift */; };
-		02AD24DC1E6EA87500B18028 /* LHWHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02AD24DB1E6EA87500B18028 /* LHWHandler.swift */; };
-		02AD24DE1E6EA87D00B18028 /* LHWWatcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02AD24DD1E6EA87D00B18028 /* LHWWatcher.swift */; };
-		02AD24E01E6EA8D200B18028 /* LHWCommon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02AD24DF1E6EA8D200B18028 /* LHWCommon.swift */; };
-		02AD24E21E6EA8FF00B18028 /* LHWTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02AD24E11E6EA8FF00B18028 /* LHWTimer.swift */; };
-		02AD24E41E6EA92000B18028 /* LHWWeakProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02AD24E31E6EA92000B18028 /* LHWWeakProxy.swift */; };
-		02AD24E61E6EA96500B18028 /* LHWQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02AD24E51E6EA96500B18028 /* LHWQueue.swift */; };
-		02AD24E81E6EB1EF00B18028 /* LHWGraphNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02AD24E71E6EB1EF00B18028 /* LHWGraphNode.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		021305D71E72AEC700FA05E2 /* AddCellActor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddCellActor.swift; sourceTree = "<group>"; };
+		021306281E75303B00FA05E2 /* LHWActionStage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LHWActionStage.swift; sourceTree = "<group>"; };
+		021306291E75303B00FA05E2 /* LHWActor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LHWActor.swift; sourceTree = "<group>"; };
+		0213062A1E75303B00FA05E2 /* LHWCommon.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LHWCommon.swift; sourceTree = "<group>"; };
+		0213062B1E75303B00FA05E2 /* LHWGraphNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LHWGraphNode.swift; sourceTree = "<group>"; };
+		0213062C1E75303B00FA05E2 /* LHWHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LHWHandler.swift; sourceTree = "<group>"; };
+		0213062D1E75303B00FA05E2 /* LHWQueue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LHWQueue.swift; sourceTree = "<group>"; };
+		0213062E1E75303B00FA05E2 /* LHWTimer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LHWTimer.swift; sourceTree = "<group>"; };
+		0213062F1E75303B00FA05E2 /* LHWWatcher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LHWWatcher.swift; sourceTree = "<group>"; };
+		021306301E75303B00FA05E2 /* LHWWeakProxy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LHWWeakProxy.swift; sourceTree = "<group>"; };
 		0233BF251E7257E2001168D5 /* FirstTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirstTableViewController.swift; sourceTree = "<group>"; };
 		0233BF271E7257E9001168D5 /* SecondTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SecondTableViewController.swift; sourceTree = "<group>"; };
 		0233BF311E7272F9001168D5 /* Launch Screen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = "Launch Screen.storyboard"; path = "../Launch Screen.storyboard"; sourceTree = "<group>"; };
@@ -37,15 +46,6 @@
 		02AD24CA1E6EA17D00B18028 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		02AD24CC1E6EA17D00B18028 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		02AD24D11E6EA17D00B18028 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		02AD24D71E6EA78200B18028 /* LHWActor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LHWActor.swift; sourceTree = "<group>"; };
-		02AD24D91E6EA7EE00B18028 /* LHWActionStage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LHWActionStage.swift; sourceTree = "<group>"; };
-		02AD24DB1E6EA87500B18028 /* LHWHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LHWHandler.swift; sourceTree = "<group>"; };
-		02AD24DD1E6EA87D00B18028 /* LHWWatcher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LHWWatcher.swift; sourceTree = "<group>"; };
-		02AD24DF1E6EA8D200B18028 /* LHWCommon.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LHWCommon.swift; sourceTree = "<group>"; };
-		02AD24E11E6EA8FF00B18028 /* LHWTimer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LHWTimer.swift; sourceTree = "<group>"; };
-		02AD24E31E6EA92000B18028 /* LHWWeakProxy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LHWWeakProxy.swift; sourceTree = "<group>"; };
-		02AD24E51E6EA96500B18028 /* LHWQueue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LHWQueue.swift; sourceTree = "<group>"; };
-		02AD24E71E6EB1EF00B18028 /* LHWGraphNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LHWGraphNode.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -59,9 +59,26 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		021306271E752FEE00FA05E2 /* Sources */ = {
+			isa = PBXGroup;
+			children = (
+				021306281E75303B00FA05E2 /* LHWActionStage.swift */,
+				021306291E75303B00FA05E2 /* LHWActor.swift */,
+				0213062A1E75303B00FA05E2 /* LHWCommon.swift */,
+				0213062B1E75303B00FA05E2 /* LHWGraphNode.swift */,
+				0213062C1E75303B00FA05E2 /* LHWHandler.swift */,
+				0213062D1E75303B00FA05E2 /* LHWQueue.swift */,
+				0213062E1E75303B00FA05E2 /* LHWTimer.swift */,
+				0213062F1E75303B00FA05E2 /* LHWWatcher.swift */,
+				021306301E75303B00FA05E2 /* LHWWeakProxy.swift */,
+			);
+			path = Sources;
+			sourceTree = "<group>";
+		};
 		02AD24B91E6EA17D00B18028 = {
 			isa = PBXGroup;
 			children = (
+				021306271E752FEE00FA05E2 /* Sources */,
 				02AD24C41E6EA17D00B18028 /* ActionStageSwift */,
 				02AD24C31E6EA17D00B18028 /* Products */,
 			);
@@ -86,16 +103,7 @@
 				0233BF311E7272F9001168D5 /* Launch Screen.storyboard */,
 				02AD24CC1E6EA17D00B18028 /* Assets.xcassets */,
 				02AD24D11E6EA17D00B18028 /* Info.plist */,
-				02AD24D71E6EA78200B18028 /* LHWActor.swift */,
 				021305D71E72AEC700FA05E2 /* AddCellActor.swift */,
-				02AD24DF1E6EA8D200B18028 /* LHWCommon.swift */,
-				02AD24D91E6EA7EE00B18028 /* LHWActionStage.swift */,
-				02AD24DB1E6EA87500B18028 /* LHWHandler.swift */,
-				02AD24DD1E6EA87D00B18028 /* LHWWatcher.swift */,
-				02AD24E11E6EA8FF00B18028 /* LHWTimer.swift */,
-				02AD24E31E6EA92000B18028 /* LHWWeakProxy.swift */,
-				02AD24E51E6EA96500B18028 /* LHWQueue.swift */,
-				02AD24E71E6EB1EF00B18028 /* LHWGraphNode.swift */,
 			);
 			path = ActionStageSwift;
 			sourceTree = "<group>";
@@ -173,19 +181,19 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				021306391E75303B00FA05E2 /* LHWWeakProxy.swift in Sources */,
+				021306361E75303B00FA05E2 /* LHWQueue.swift in Sources */,
+				021306371E75303B00FA05E2 /* LHWTimer.swift in Sources */,
+				021306351E75303B00FA05E2 /* LHWHandler.swift in Sources */,
 				0233BF281E7257E9001168D5 /* SecondTableViewController.swift in Sources */,
-				02AD24DC1E6EA87500B18028 /* LHWHandler.swift in Sources */,
-				02AD24DA1E6EA7EE00B18028 /* LHWActionStage.swift in Sources */,
-				02AD24DE1E6EA87D00B18028 /* LHWWatcher.swift in Sources */,
-				02AD24E01E6EA8D200B18028 /* LHWCommon.swift in Sources */,
 				021305D81E72AEC700FA05E2 /* AddCellActor.swift in Sources */,
-				02AD24E41E6EA92000B18028 /* LHWWeakProxy.swift in Sources */,
-				02AD24D81E6EA78200B18028 /* LHWActor.swift in Sources */,
-				02AD24E21E6EA8FF00B18028 /* LHWTimer.swift in Sources */,
-				02AD24E61E6EA96500B18028 /* LHWQueue.swift in Sources */,
 				0233BF261E7257E2001168D5 /* FirstTableViewController.swift in Sources */,
-				02AD24E81E6EB1EF00B18028 /* LHWGraphNode.swift in Sources */,
 				02AD24C81E6EA17D00B18028 /* ViewController.swift in Sources */,
+				021306341E75303B00FA05E2 /* LHWGraphNode.swift in Sources */,
+				021306321E75303B00FA05E2 /* LHWActor.swift in Sources */,
+				021306381E75303B00FA05E2 /* LHWWatcher.swift in Sources */,
+				021306311E75303B00FA05E2 /* LHWActionStage.swift in Sources */,
+				021306331E75303B00FA05E2 /* LHWCommon.swift in Sources */,
 				02AD24C61E6EA17D00B18028 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

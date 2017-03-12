@@ -55,7 +55,7 @@ func LHW_SPINLOCKER_UNLOCK(_ lock: inout OSSpinLock) {
     OSSpinLockUnlock(&lock)
 }
 
-func LHWDispatchOnMainThread(_ closure: @escaping () -> Void) {
+@inline(__always) func LHWDispatchOnMainThread(_ closure: @escaping () -> Void) {
     if Thread.isMainThread {
         closure()
     } else {
@@ -63,6 +63,10 @@ func LHWDispatchOnMainThread(_ closure: @escaping () -> Void) {
             closure()
         }
     }
+}
+
+@inline(__always) func LHWDispatchAfter(_ delay: Double, queue: DispatchQueue, closure: @escaping () -> Void) {
+    queue.asyncAfter(deadline: .now()+delay, execute: closure)
 }
 
 // MRAK: -
