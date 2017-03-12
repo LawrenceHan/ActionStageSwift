@@ -19,6 +19,11 @@ class SecondTableViewController: UITableViewController, LHWWatcher {
         LHWActionStage.instance.watchForGenericPath("/mg/newcell/@", watcher: self)
     }
 
+    deinit {
+        actionHandler?.reset()
+        LHWActionStage.instance.removeWatcher(self)
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -46,7 +51,7 @@ class SecondTableViewController: UITableViewController, LHWWatcher {
     }
  
     func actionStageResourceDispatched(path: String, resource: Any?, arguments: Any?) {
-        if path.hasPrefix("/mg/newcell") {
+        if path == "/mg/newcell/(11)" {
             let text = resource as! String
             array.append(text)
             

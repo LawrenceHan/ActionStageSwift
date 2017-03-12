@@ -19,6 +19,11 @@ class FirstTableViewController: UITableViewController, LHWWatcher {
         LHWActionStage.instance.watchForPath("/mg/newcell/(11)", watcher: self)
     }
     
+    deinit {
+        actionHandler?.reset()
+        LHWActionStage.instance.removeWatcher(self)
+    }
+    
     @IBAction func addCell(_ sender: UIBarButtonItem) {
         let options = ["text": "new cell \(array.count+1)"]
         LHWActionStage.instance.requestActor(path: "/mg/newcell/(11)", options: options, watcher: self)
