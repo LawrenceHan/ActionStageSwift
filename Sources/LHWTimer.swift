@@ -27,7 +27,7 @@
 
 import Foundation
 
-final class LHWTImer: NSObject {
+final class LHWTimer: NSObject {
     // MARK: -
     var timeoutDate: TimeInterval = Double(INTMAX_MAX)
     

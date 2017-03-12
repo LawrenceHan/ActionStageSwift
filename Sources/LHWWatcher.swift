@@ -27,7 +27,7 @@
 
 import Foundation
 
-@objc protocol LHWWatcher: NSObjectProtocol {
+@objc protocol LHWWatcher {
     var actionHandler: LHWHandler? { get }
     
     @objc optional func actorCompleted(status: LHWActionStageStatus, path: String, result: Any?)
