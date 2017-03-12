@@ -8,4 +8,8 @@ It won't hurt to buy me a cup of coffee so I can spend more time on bringing mor
 
 Currently I can only work on open-source project in my personal time (evening/weekend/holiday).
 
+# Paypal
+https://www.paypal.me/LawrenceGuangHan/
+
+# Alipay
 ![payme](https://github.com/LawrenceHan/ActionStageSwift/blob/master/payme.JPG)
