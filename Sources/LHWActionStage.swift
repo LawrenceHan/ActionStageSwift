@@ -33,7 +33,7 @@ public enum LHWActorRequestFlags: Int {
     case ChangePriority = 1
 }
 
-open class LHWActionStage: NSObject {
+open class LHWActionStage {
     // MARK: -
     open static let `default` = LHWActionStage()
     open static let globalFileManager: FileManager = FileManager()
@@ -57,7 +57,7 @@ open class LHWActionStage: NSObject {
     private var liveNodeWatchers: [String: [LHWHandler]]
     private var actorMessagesWatchers: [String: [LHWHandler]]
     
-    private override init() {
+    private init() {
         requestQueues = [String: Array<LHWActor>]()
         activeRequests = [String: Any]()
 //        cancelRequestTimers = [String: Any]()
