@@ -24,27 +24,27 @@
 
 import Foundation
 
-class LHWActor: NSObject {
+open class LHWActor {
     // MARK: -
     private static var registeredRequestBuilders: [String: AnyClass] = [String: AnyClass]()
     
-    var path: String
-    var requestQueueName: String? = nil
-    var storedOptions: [String: Any]? = [String: Any]()
-    var requiresAuthorization: Bool = false
-    var cancelTimeout: TimeInterval
-    var cancelToken: Any? = nil
-    var multipleCancelTokens: [Any] = [Any]()
-    var cancelled: Bool = false
+    open var path: String
+    open var requestQueueName: String? = nil
+    open var storedOptions: [String: Any]? = [String: Any]()
+    open var requiresAuthorization: Bool = false
+    open var cancelTimeout: TimeInterval
+    open var cancelToken: Any? = nil
+    open var multipleCancelTokens: [Any] = [Any]()
+    open var cancelled: Bool = false
     
-    required init(path: String) {
+    public required init(path: String) {
         self.cancelTimeout = 0
         self.path = path
     }
     
     // MARK: -
-    class func registerActorClass(_ requestBuilderClass: AnyClass) {
-        guard let genericPath = requestBuilderClass.genericPath() else {
+    open class func registerActorClass(_ requestBuilderClass: AnyClass) {
+        guard let genericPath = (requestBuilderClass as! LHWActor.Type).genericPath() else {
             print("Error: LHWActor.registerActorClass: genericPath is nil")
             return
         }
@@ -52,7 +52,7 @@ class LHWActor: NSObject {
         registeredRequestBuilders[genericPath] = requestBuilderClass
     }
     
-    class func requestBuilderForGenericPath(_ genericPath: String, path: String) -> LHWActor? {
+    open class func requestBuilderForGenericPath(_ genericPath: String, path: String) -> LHWActor? {
         let builderClass = registeredRequestBuilders[genericPath]
         if builderClass != nil && builderClass is LHWActor.Type {
             let builderInstance = (builderClass as! LHWActor.Type).init(path: path)
@@ -62,30 +62,46 @@ class LHWActor: NSObject {
         }
     }
     
-    class func genericPath() -> String? {
+    open class func genericPath() -> String? {
         print("Error: LHWActor.genericPath: no default implementation provided")
         return nil
     }
     
     // MARK: -
-    func prepare(options: [String: Any]?) {
+    open func prepare(options: [String: Any]?) {
     }
     
-    func execute(options: [String: Any]?) {
+    open func execute(options: [String: Any]?) {
     }
     
-    func cancel() {
+    open func cancel() {
         cancelled = true
     }
     
-    func addCancelToken(token: Any) {
+    open func addCancelToken(token: Any) {
         multipleCancelTokens.append(token)
     }
     
-    func watcherJoined(watcherHandler: LHWHandler, options: [String: Any]?, waitingInActorQueue: Bool) {
+    open func watcherJoined(watcherHandler: LHWHandler, options: [String: Any]?, waitingInActorQueue: Bool) {
     }
     
-    func handleRequestProblem() {
+    open func handleRequestProblem() {
     }
     
 }
+
+/*
+extension LHWActor: Equatable {
+    open static func ==(lhs: LHWActor, rhs: LHWActor) -> Bool {
+        if lhs.path == rhs.path &&
+            lhs.requestQueueName == rhs.requestQueueName &&
+            lhs.requiresAuthorization == rhs.requiresAuthorization &&
+            lhs.cancelTimeout == rhs.cancelTimeout &&
+            lhs.cancelled == rhs.cancelled {
+            return true
+        } else {
+            return false
+        }
+    }
+}
+*/

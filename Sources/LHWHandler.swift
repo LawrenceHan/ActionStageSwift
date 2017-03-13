@@ -27,10 +27,10 @@
 
 import Foundation
 
-class LHWHandler: NSObject {
+open class LHWHandler {
     // MARK: -
     private var _delegate: LHWWatcher?
-    var delegate: LHWWatcher? {
+    open var delegate: LHWWatcher? {
         get {
             var result: LHWWatcher? = nil
             
@@ -47,24 +47,24 @@ class LHWHandler: NSObject {
             LHW_MUTEXLOCKER_UNLOCK(&_delegateLock)
         }
     }
-    var releaseOnMainThread: Bool
+    open var releaseOnMainThread: Bool
     
     private var _delegateLock: pthread_mutex_t
     // MARK: -
-    init(delegate: LHWWatcher, releaseOnMainThread: Bool = false) {
+    public init(delegate: LHWWatcher, releaseOnMainThread: Bool = false) {
         self.releaseOnMainThread = releaseOnMainThread
         _delegateLock = LHW_MUTEXLOCKER_INIT()
         self._delegate = delegate
     }
     
     // MARK: -
-    func reset() {
+    open func reset() {
         LHW_MUTEXLOCKER_LOCK(&_delegateLock)
         _delegate = nil
         LHW_MUTEXLOCKER_UNLOCK(&_delegateLock)
     }
     
-    func hasDelegate() -> Bool {
+    open func hasDelegate() -> Bool {
         var result = false
         
         LHW_MUTEXLOCKER_LOCK(&_delegateLock)
@@ -77,7 +77,7 @@ class LHWHandler: NSObject {
     func requestAction(_ action: String, options: Dictionary<String, Any>) {
         guard let delegate = _delegate else { return }
         
-        delegate.actionStageActionRequested?(action, options: options)
+        delegate.actionStageActionRequested(action, options: options)
         
         if releaseOnMainThread && !Thread.isMainThread {
             DispatchQueue.main.async {
@@ -87,7 +87,7 @@ class LHWHandler: NSObject {
     }
     
     func receiveActorMessage(path: String, messageType: String? = nil, message: Any? = nil) {        
-        _delegate?.actorMessageReceived?(path: path, messageType: messageType, message: message)
+        _delegate?.actorMessageReceived(path: path, messageType: messageType, message: message)
         
         if releaseOnMainThread && !Thread.isMainThread {
             DispatchQueue.main.async {
@@ -99,7 +99,7 @@ class LHWHandler: NSObject {
     func notifyResourceDispatched(path: String, resource: Any, arguments: Any? = nil) {
         guard let delegate = _delegate else { return }
         
-        delegate.actionStageResourceDispatched?(path: path, resource: resource, arguments: arguments)
+        delegate.actionStageResourceDispatched(path: path, resource: resource, arguments: arguments)
         
         if releaseOnMainThread && !Thread.isMainThread {
             DispatchQueue.main.async {
@@ -108,3 +108,15 @@ class LHWHandler: NSObject {
         }
     }
 }
+
+/*
+extension LHWHandler: Equatable {
+    open static func ==(lhs: LHWHandler, rhs: LHWHandler) -> Bool {
+        if lhs.delegate === rhs.delegate {
+            return true
+        } else {
+            return false
+        }
+    }
+}
+*/

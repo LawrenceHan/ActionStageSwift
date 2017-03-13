@@ -27,7 +27,7 @@
 
 import Foundation
 
-@objc class LHWGraphObjectNode: LHWGraphNode {
+open  class LHWGraphObjectNode: LHWGraphNode {
     var items: [Any] = [Any]()
     
     init(items: [Any]) {
@@ -35,6 +35,6 @@ import Foundation
     }
 }
 
-@objc class LHWGraphNode: NSObject {
+open class LHWGraphNode {
     
 }

@@ -27,7 +27,7 @@
 
 import Foundation
 
-final class LHWQueue: NSObject {
+open class LHWQueue: NSObject {
     // MARK: -
     private var _isMainQueue = false
     private var queue: DispatchQueue?
@@ -41,7 +41,7 @@ final class LHWQueue: NSObject {
         self._isMainQueue = true
     }
     
-    init(name: String) {
+    public init(name: String) {
         self.name = name
         self.queue = DispatchQueue(label: name)
         self.queue?.setSpecific(key: queueSpecificKey, value: name)
@@ -52,15 +52,15 @@ final class LHWQueue: NSObject {
     }
     
     // MARK: -
-    func mainQueue() -> LHWQueue {
+    open func mainQueue() -> LHWQueue {
         return ._mainQueue
     }
     
-    func nativeQueue() -> DispatchQueue? {
+    open func nativeQueue() -> DispatchQueue? {
         return queue
     }
     
-    func isCurrentQueue() -> Bool {
+    open func isCurrentQueue() -> Bool {
         if queue == nil {
             return false
         }
@@ -72,7 +72,7 @@ final class LHWQueue: NSObject {
         }
     }
     
-    func dispatchOnQueue(_ closure: @escaping () -> Void, synchronous: Bool) {
+    open func dispatchOnQueue(_ closure: @escaping () -> Void, synchronous: Bool) {
         if let queue = queue {
             if _isMainQueue {
                 if Thread.isMainThread {

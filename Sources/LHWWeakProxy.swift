@@ -27,6 +27,6 @@
 
 import Foundation
 
-final class LHWWeakProxy: NSObject {
+open class LHWWeakProxy: NSObject {
     weak var object: AnyObject?
 }

@@ -16,12 +16,12 @@ class SecondTableViewController: UITableViewController, LHWWatcher {
     override func viewDidLoad() {
         super.viewDidLoad()
         actionHandler = LHWHandler(delegate: self)
-        LHWActionStage.instance.watchForGenericPath("/mg/newcell/@", watcher: self)
+        ActionStageInstance.watchForGenericPath("/mg/newcell/@", watcher: self)
     }
 
     deinit {
         actionHandler?.reset()
-        LHWActionStage.instance.removeWatcher(self)
+        ActionStageInstance.removeWatcher(self)
     }
     
     override func didReceiveMemoryWarning() {

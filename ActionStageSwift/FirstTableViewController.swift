@@ -16,21 +16,21 @@ class FirstTableViewController: UITableViewController, LHWWatcher {
     override func viewDidLoad() {
         super.viewDidLoad()
         actionHandler = LHWHandler(delegate: self)
-        LHWActionStage.instance.watchForPath("/mg/newcell/(11)", watcher: self)
+        ActionStageInstance.watchForPath("/mg/newcell/(11)", watcher: self)
     }
     
     deinit {
         actionHandler?.reset()
-        LHWActionStage.instance.removeWatcher(self)
+        ActionStageInstance.removeWatcher(self)
     }
     
     @IBAction func addCell(_ sender: UIBarButtonItem) {
         let options = ["text": "new cell \(array.count+1)"]
-        LHWActionStage.instance.requestActor(path: "/mg/newcell/(11)", options: options, watcher: self)
-        LHWActionStage.instance.requestActor(path: "/mg/newcell/(11)", options: options, watcher: self)
-        LHWActionStage.instance.requestActor(path: "/mg/newcell/(11)", options: options, watcher: self)
-        LHWActionStage.instance.requestActor(path: "/mg/newcell/(11)", options: options, watcher: self)
-        LHWActionStage.instance.requestActor(path: "/mg/newcell/(11)", options: options, watcher: self)
+        ActionStageInstance.requestActor(path: "/mg/newcell/(11)", options: options, watcher: self)
+        ActionStageInstance.requestActor(path: "/mg/newcell/(11)", options: options, watcher: self)
+        ActionStageInstance.requestActor(path: "/mg/newcell/(11)", options: options, watcher: self)
+        ActionStageInstance.requestActor(path: "/mg/newcell/(11)", options: options, watcher: self)
+        ActionStageInstance.requestActor(path: "/mg/newcell/(11)", options: options, watcher: self)
     }
 
     override func didReceiveMemoryWarning() {

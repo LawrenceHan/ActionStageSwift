@@ -27,9 +27,9 @@ class AddCellActor: LHWActor {
             return
         }
         
-        LHWActionStage.instance.dispatchResource(path: path, resource: text, arguments: nil)
+        ActionStageInstance.dispatchResource(path: path, resource: text, arguments: nil)
         DispatchQueue.global().asyncAfter(deadline: .now() + 0.1) {
-            LHWActionStage.instance.actionCompleted(self.path)
+            ActionStageInstance.actionCompleted(self.path)
         }
     }
     

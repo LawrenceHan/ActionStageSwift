@@ -27,7 +27,7 @@
 
 import Foundation
 
-final class LHWTimer: NSObject {
+open class LHWTimer {
     // MARK: -
     var timeoutDate: TimeInterval = Double(INTMAX_MAX)
     
@@ -37,7 +37,7 @@ final class LHWTimer: NSObject {
     private var completion: (() -> Void)?
     private var queue: DispatchQueue
     
-    init(timeout: TimeInterval, shouldRepeat: Bool, completion: @escaping () -> Void, queue: DispatchQueue) {
+    public init(timeout: TimeInterval, shouldRepeat: Bool, completion: @escaping () -> Void, queue: DispatchQueue) {
         self.timeout = timeout
         self.shouldRepeat = shouldRepeat
         self.completion = completion
@@ -52,7 +52,7 @@ final class LHWTimer: NSObject {
     }
     
     // MARK: -
-    func start() {
+    open func start() {
         timeoutDate = CFAbsoluteTimeGetCurrent() + kCFAbsoluteTimeIntervalSince1970 + timeout
         
         timer = DispatchSource.makeTimerSource(flags: DispatchSource.TimerFlags(rawValue: 0), queue: queue)
@@ -75,14 +75,14 @@ final class LHWTimer: NSObject {
         timer?.resume()
     }
     
-    func fireAndInvalidate() {
+    open func fireAndInvalidate() {
         if let completion = self.completion {
             completion()
         }
         self.invalidate()
     }
     
-    func invalidate() {
+    open func invalidate() {
         timeoutDate = 0
         if timer != nil {
             timer?.cancel()
@@ -90,18 +90,18 @@ final class LHWTimer: NSObject {
         }
     }
     
-    func isScheduled() -> Bool {
+    open func isScheduled() -> Bool {
         return timer != nil
     }
     
-    func resetTimeout(timeout: TimeInterval) {
+    open func resetTimeout(timeout: TimeInterval) {
         invalidate()
         
         self.timeout = timeout
         start()
     }
     
-    func remainingTime() -> TimeInterval {
+    open func remainingTime() -> TimeInterval {
         if timeoutDate < Double(FLT_EPSILON) {
             return DBL_MAX
         } else {

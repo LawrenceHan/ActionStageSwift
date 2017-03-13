@@ -28,34 +28,34 @@
 import Foundation
 
 // MRAK: -
-func LHW_MUTEXLOCKER_INIT() -> pthread_mutex_t {
+public func LHW_MUTEXLOCKER_INIT() -> pthread_mutex_t {
     var mutex: pthread_mutex_t = pthread_mutex_t()
     pthread_mutex_init(&mutex, nil)
     return mutex
 }
 
-func LHW_MUTEXLOCKER_LOCK(_ lock: inout pthread_mutex_t) {
+public func LHW_MUTEXLOCKER_LOCK(_ lock: inout pthread_mutex_t) {
     pthread_mutex_lock(&lock)
 }
 
-func LHW_MUTEXLOCKER_UNLOCK(_ lock: inout pthread_mutex_t) {
+public func LHW_MUTEXLOCKER_UNLOCK(_ lock: inout pthread_mutex_t) {
     pthread_mutex_unlock(&lock)
 }
 
-func LHW_SPINLOCKER_INIT() -> OSSpinLock {
+public func LHW_SPINLOCKER_INIT() -> OSSpinLock {
     let spinLock = OS_SPINLOCK_INIT
     return spinLock
 }
 
-func LHW_SPINLOCKER_LOCK(_ lock: inout OSSpinLock) {
+public func LHW_SPINLOCKER_LOCK(_ lock: inout OSSpinLock) {
     OSSpinLockLock(&lock)
 }
 
-func LHW_SPINLOCKER_UNLOCK(_ lock: inout OSSpinLock) {
+public func LHW_SPINLOCKER_UNLOCK(_ lock: inout OSSpinLock) {
     OSSpinLockUnlock(&lock)
 }
 
-@inline(__always) func LHWDispatchOnMainThread(_ closure: @escaping () -> Void) {
+@inline(__always) public func LHWDispatchOnMainThread(_ closure: @escaping () -> Void) {
     if Thread.isMainThread {
         closure()
     } else {
@@ -65,13 +65,13 @@ func LHW_SPINLOCKER_UNLOCK(_ lock: inout OSSpinLock) {
     }
 }
 
-@inline(__always) func LHWDispatchAfter(_ delay: Double, queue: DispatchQueue, closure: @escaping () -> Void) {
+@inline(__always) public func LHWDispatchAfter(_ delay: Double, queue: DispatchQueue, closure: @escaping () -> Void) {
     queue.asyncAfter(deadline: .now()+delay, execute: closure)
 }
 
 // MRAK: -
 extension Array where Element: AnyObject {
-    mutating func remove(object: Element) {
+    public mutating func remove(object: Element) {
         if let index = index(where: { $0 === object }) {
             remove(at: index)
         }

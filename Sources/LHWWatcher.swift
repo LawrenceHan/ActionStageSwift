@@ -27,12 +27,29 @@
 
 import Foundation
 
-@objc protocol LHWWatcher {
+public protocol LHWWatcher {
     var actionHandler: LHWHandler? { get }
     
-    @objc optional func actorCompleted(status: LHWActionStageStatus, path: String, result: Any?)
-    @objc optional func actorReportedProgress(path: String, progress: Float)
-    @objc optional func actionStageResourceDispatched(path: String, resource: Any?, arguments: Any?)
-    @objc optional func actionStageActionRequested(_ action: String, options: Dictionary<String, Any>?)
-    @objc optional func actorMessageReceived(path: String, messageType: String?, message: Any?)
+    func actorCompleted(status: LHWActionStageStatus, path: String, result: Any?)
+    func actorReportedProgress(path: String, progress: Float)
+    func actionStageResourceDispatched(path: String, resource: Any?, arguments: Any?)
+    func actionStageActionRequested(_ action: String, options: Dictionary<String, Any>?)
+    func actorMessageReceived(path: String, messageType: String?, message: Any?)
+}
+
+extension LHWWatcher {
+    func actorCompleted(status: LHWActionStageStatus, path: String, result: Any?) {
+    }
+    
+    func actorReportedProgress(path: String, progress: Float) {
+    }
+    
+    func actionStageResourceDispatched(path: String, resource: Any?, arguments: Any?) {
+    }
+    
+    func actionStageActionRequested(_ action: String, options: Dictionary<String, Any>?) {
+    }
+    
+    func actorMessageReceived(path: String, messageType: String?, message: Any?) {
+    }
 }
