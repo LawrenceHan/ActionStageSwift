@@ -33,7 +33,7 @@ open class LHWQueue: NSObject {
     private var queue: DispatchQueue?
     private var name: String
     private let queueSpecificKey = DispatchSpecificKey<String>()
-    private static let _mainQueue: LHWQueue = LHWQueue()
+    private static let _mainQueue = LHWQueue()
     
     private override init() {
         self.name = "com.hanguang.LHWQueue.MainQueue"

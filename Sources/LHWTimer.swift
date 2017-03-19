@@ -33,7 +33,7 @@ open class LHWTimer {
     
     private var timer: DispatchSourceTimer? = nil
     private var timeout: TimeInterval
-    private var shouldRepeat: Bool = false
+    private var shouldRepeat = false
     private var completion: (() -> Void)?
     private var queue: DispatchQueue
     

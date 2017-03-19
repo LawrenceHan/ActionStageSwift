@@ -26,7 +26,7 @@ import Foundation
 
 open class LHWActor {
     // MARK: -
-    private static var registeredRequestBuilders: [String: AnyClass] = [String: AnyClass]()
+    private static var registeredRequestActors = [String: LHWActor.Type]()
     
     open var path: String
     open var requestQueueName: String? = nil
@@ -34,7 +34,7 @@ open class LHWActor {
     open var requiresAuthorization: Bool = false
     open var cancelTimeout: TimeInterval
     open var cancelToken: Any? = nil
-    open var multipleCancelTokens: [Any] = [Any]()
+    open var multipleCancelTokens = [Any]()
     open var cancelled: Bool = false
     
     public required init(path: String) {
@@ -43,20 +43,19 @@ open class LHWActor {
     }
     
     // MARK: -
-    open class func registerActorClass(_ requestBuilderClass: AnyClass) {
-        guard let genericPath = (requestBuilderClass as! LHWActor.Type).genericPath() else {
+    open class func registerActorClass(_ requestActorClass: LHWActor.Type) {
+        guard let genericPath = requestActorClass.genericPath() else {
             print("Error: LHWActor.registerActorClass: genericPath is nil")
             return
         }
-        
-        registeredRequestBuilders[genericPath] = requestBuilderClass
+        registeredRequestActors[genericPath] = requestActorClass
     }
     
-    open class func requestBuilderForGenericPath(_ genericPath: String, path: String) -> LHWActor? {
-        let builderClass = registeredRequestBuilders[genericPath]
-        if builderClass != nil && builderClass is LHWActor.Type {
-            let builderInstance = (builderClass as! LHWActor.Type).init(path: path)
-            return builderInstance
+    open class func requestActorForGenericPath(_ genericPath: String, path: String) -> LHWActor? {
+        let actorClass = registeredRequestActors[genericPath]
+        if actorClass != nil {
+            let actor = actorClass?.init(path: path)
+            return actor
         } else {
             return nil
         }

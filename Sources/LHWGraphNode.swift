@@ -36,5 +36,4 @@ open  class LHWGraphObjectNode: LHWGraphNode {
 }
 
 open class LHWGraphNode {
-    
 }
