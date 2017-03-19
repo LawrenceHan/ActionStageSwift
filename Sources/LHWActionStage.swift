@@ -36,7 +36,7 @@ public enum LHWActorRequestFlags: Int {
 open class LHWActionStage {
     // MARK: -
     open static let `default` = LHWActionStage()
-    open static let globalFileManager: FileManager = FileManager()
+    open static let globalFileManager: FileManager = FileManager.default
     
     // MARK: -
     private let graphQueueSpecific = "com.hanguang.app.ActionStageSwift.graphdispatchqueue"
