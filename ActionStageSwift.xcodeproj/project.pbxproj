@@ -21,6 +21,7 @@
 		0233BF281E7257E9001168D5 /* SecondTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0233BF271E7257E9001168D5 /* SecondTableViewController.swift */; };
 		0233BF321E7272F9001168D5 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0233BF311E7272F9001168D5 /* Launch Screen.storyboard */; };
 		02500AD21E7EC7AD002C188E /* LHWLog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02500AD11E7EC7AD002C188E /* LHWLog.swift */; };
+		02500AD51E7FECB2002C188E /* LHWLogFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02500AD41E7FECB2002C188E /* LHWLogFilter.swift */; };
 		02AD24C61E6EA17D00B18028 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02AD24C51E6EA17D00B18028 /* AppDelegate.swift */; };
 		02AD24C81E6EA17D00B18028 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02AD24C71E6EA17D00B18028 /* ViewController.swift */; };
 		02AD24CB1E6EA17D00B18028 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 02AD24C91E6EA17D00B18028 /* Main.storyboard */; };
@@ -42,6 +43,8 @@
 		0233BF271E7257E9001168D5 /* SecondTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SecondTableViewController.swift; sourceTree = "<group>"; };
 		0233BF311E7272F9001168D5 /* Launch Screen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = "Launch Screen.storyboard"; path = "../Launch Screen.storyboard"; sourceTree = "<group>"; };
 		02500AD11E7EC7AD002C188E /* LHWLog.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LHWLog.swift; sourceTree = "<group>"; };
+		02500AD31E7FCFC6002C188E /* MyPlayground.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = MyPlayground.playground; sourceTree = "<group>"; };
+		02500AD41E7FECB2002C188E /* LHWLogFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LHWLogFilter.swift; sourceTree = "<group>"; };
 		02AD24C21E6EA17D00B18028 /* ActionStageSwift.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ActionStageSwift.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		02AD24C51E6EA17D00B18028 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		02AD24C71E6EA17D00B18028 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -74,6 +77,7 @@
 				0213062F1E75303B00FA05E2 /* LHWWatcher.swift */,
 				021306301E75303B00FA05E2 /* LHWWeakProxy.swift */,
 				02500AD11E7EC7AD002C188E /* LHWLog.swift */,
+				02500AD41E7FECB2002C188E /* LHWLogFilter.swift */,
 			);
 			path = Sources;
 			sourceTree = "<group>";
@@ -107,6 +111,7 @@
 				02AD24CC1E6EA17D00B18028 /* Assets.xcassets */,
 				02AD24D11E6EA17D00B18028 /* Info.plist */,
 				021305D71E72AEC700FA05E2 /* AddCellActor.swift */,
+				02500AD31E7FCFC6002C188E /* MyPlayground.playground */,
 			);
 			path = ActionStageSwift;
 			sourceTree = "<group>";
@@ -184,6 +189,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				02500AD51E7FECB2002C188E /* LHWLogFilter.swift in Sources */,
 				021306391E75303B00FA05E2 /* LHWWeakProxy.swift in Sources */,
 				021306361E75303B00FA05E2 /* LHWQueue.swift in Sources */,
 				021306371E75303B00FA05E2 /* LHWTimer.swift in Sources */,

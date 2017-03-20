@@ -79,65 +79,49 @@ extension Array where Element: AnyObject {
 }
 
 // MARK: - Commons
-public let documentsPath: String = {
+public let LHWDocumentsPath: String = {
     var path: String? = nil
     let groupName = "group."+Bundle.main.bundleIdentifier!
-    if let groupURL = LHWActionStage.globalFileManager.containerURL(forSecurityApplicationGroupIdentifier: groupName) {
+    if let groupURL = LHWActionStage.GlobalFileManager.containerURL(forSecurityApplicationGroupIdentifier: groupName) {
         let documentsPathURL = groupURL.appendingPathComponent("Documents")
         do {
-            try LHWActionStage.globalFileManager.createDirectory(at: documentsPathURL, withIntermediateDirectories: true, attributes: nil)
+            try LHWActionStage.GlobalFileManager.createDirectory(at: documentsPathURL, withIntermediateDirectories: true, attributes: nil)
         } catch {
-            path = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0]
         }
         path = documentsPathURL.path
     } else {
         path = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0]
     }
+    
     return path!
 }()
 
-//public func documentsPath() -> String {
-//    var path: String? = nil
-//    let groupName = "group."+Bundle.main.bundleIdentifier!
-//    if let groupURL = LHWActionStage.globalFileManager.containerURL(forSecurityApplicationGroupIdentifier: groupName) {
-//        let documentsPathURL = groupURL.appendingPathComponent("Documents")
-//        do {
-//            try LHWActionStage.globalFileManager.createDirectory(at: documentsPathURL, withIntermediateDirectories: true, attributes: nil)
-//        } catch {
-//            path = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0]
-//        }
-//        path = documentsPathURL.path
-//    } else {
-//        path = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0]
-//    }
-//    
-//    return path!
-//}
-//+ (NSString *)documentsPath
-//    {
-//        static NSString *path = nil;
-//        static dispatch_once_t onceToken;
-//        dispatch_once(&onceToken, ^
-//        {
-//        if (iosMajorVersion() >= 8)
-//        {
-//        NSString *groupName = [@"group." stringByAppendingString:[[NSBundle mainBundle] bundleIdentifier]];
-//        
-//        NSURL *groupURL = [[NSFileManager defaultManager] containerURLForSecurityApplicationGroupIdentifier:groupName];
-//        if (groupURL != nil)
-//        {
-//        NSString *documentsPath = [[groupURL path] stringByAppendingPathComponent:@"Documents"];
-//        
-//        [[NSFileManager defaultManager] createDirectoryAtPath:documentsPath withIntermediateDirectories:true attributes:nil error:NULL];
-//        
-//        path = documentsPath;
-//        }
-//        else
-//        path = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, true)[0];
-//        }
-//        else
-//        path = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, true)[0];
-//        });
-//        
-//        return path;
-//}
+public let LHWCachesPath: String = {
+    var path: String? = nil
+    let groupName = "group."+Bundle.main.bundleIdentifier!
+    if let groupURL = LHWActionStage.GlobalFileManager.containerURL(forSecurityApplicationGroupIdentifier: groupName) {
+        let documentsPathURL = groupURL.appendingPathComponent("Caches")
+        do {
+            try LHWActionStage.GlobalFileManager.createDirectory(at: documentsPathURL, withIntermediateDirectories: true, attributes: nil)
+        } catch {
+        }
+        path = documentsPathURL.path
+    } else {
+        path = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0]
+    }
+    
+    return path!
+}()
+
+
+
+
+
+
+
+
+
+
+
+
+

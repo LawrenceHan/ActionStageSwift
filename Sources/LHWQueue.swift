@@ -76,19 +76,19 @@ open class LHWQueue: NSObject {
         if let queue = queue {
             if _isMainQueue {
                 if Thread.isMainThread {
-                    closure()
+                    autoreleasepool(invoking: { closure() })
                 } else if synchronous {
-                    queue.sync { closure() }
+                    queue.sync { autoreleasepool(invoking: { closure() }) }
                 } else {
-                    queue.async { closure() }
+                    queue.async { autoreleasepool(invoking: {closure() }) }
                 }
             } else {
                 if DispatchQueue.getSpecific(key: queueSpecificKey) == name {
-                    closure()
+                    autoreleasepool(invoking: { closure() })
                 } else if synchronous {
-                    queue.sync { closure() }
+                    queue.sync { autoreleasepool(invoking: { closure() }) }
                 } else {
-                    queue.async { closure() }
+                    queue.async { autoreleasepool(invoking: { closure() }) }
                 }
             }
         }

@@ -37,7 +37,6 @@ open class LHWActionStage {
     // MARK: -
     open static let `default` = LHWActionStage()
     open static let GlobalFileManager = FileManager.default
-    }
     
     // MARK: -
     private let graphQueueSpecific = "com.hanguang.app.ActionStageSwift.graphdispatchqueue"
