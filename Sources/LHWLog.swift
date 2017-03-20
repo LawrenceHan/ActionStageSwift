@@ -56,7 +56,7 @@ public enum Level: Int {
 private let LHWLogQueue = LHWQueue(name: "com.hanguang.logqueue")
 
 private let LHWLogFileHandle: FileHandle? = {
-    let fileManager = FileManager()
+    let fileManager = GlobalFileManager
     let documentsDirectory = URL(string: LHWDocumentsPath)!
     
     let currentFilePath = documentsDirectory.appendingPathComponent("application-0.log")
@@ -89,7 +89,6 @@ private let LHWLogFileHandle: FileHandle? = {
 }()
 
 private var format = "$DHH:mm:ss.SSS$d $C$L$c $N.$F:$l - $M"
-private let returnData: Data = "\n".data(using: .utf8)!
 
 open class LHWLog {
     // MARK: - Types
@@ -112,10 +111,19 @@ open class LHWLog {
         var error = "❤️ "       // red
     }
     
+    private struct FileLevelColor {
+        var verbose = "251m"     // silver
+        var debug = "35m"        // green
+        var info = "38m"         // blue
+        var warning = "178m"     // yellow
+        var error = "197m"       // red
+    }
+    
     // MARK: - Properties
     open var debugPrint = false // set to true to debug the internal filter logic of the class
-    var reset = ""
-    var escape = ""
+    var reset = "\u{001b}[0m"
+    var escape = "\u{001b}[38;5;"
+    
     
     var filters = [LHWFilterType]()
     let formatter = DateFormatter()
@@ -129,26 +137,29 @@ open class LHWLog {
     /// set custom log level colors for each level
     private var levelColor = LevelColor()
     
-    open private(set) var logEnabled: Bool = true
+    /// set custom file log level colors for each level
+    private var fileLevelColor = FileLevelColor()
+    
+    open private(set) var logToFileEnabled: Bool = true
     
     open static let `default` = LHWLog()
     
     private init() {
 //        #if DEBUG
-//            logEnabled = true
+//            logToFileEnabled = true
 //        #else
-//            logEnabled = false
+//            logToFileEnabled = false
 //        #endif
     }
 
     // MARK: Levels
     
     public func setEnabled(_ enabled: Bool) {
-        logEnabled = enabled
+        logToFileEnabled = enabled
     }
     
     public func LHWLogIsEnabled() -> Bool {
-        return logEnabled
+        return logToFileEnabled
     }
     
     public func synchronize() {
@@ -165,7 +176,7 @@ open class LHWLog {
             let fileName = "application-\(i).log"
             let filePath = documentsDirectory.appendingPathComponent(fileName)
             
-            if LHWActionStage.GlobalFileManager.fileExists(atPath: filePath.path) {
+            if GlobalFileManager.fileExists(atPath: filePath.path) {
                 filePaths.append(filePath.path)
             }
         }
@@ -179,7 +190,7 @@ open class LHWLog {
         LHWLogQueue.dispatchOnQueue({ 
             LHWLogFileHandle?.synchronizeFile()
             
-            let fileManager = FileManager()
+            let fileManager = GlobalFileManager
             let documentsDirectory = URL(string: LHWDocumentsPath)!
             
             for i in 0...4 {
@@ -242,22 +253,25 @@ open class LHWLog {
         var resolvedMessage: String?
         resolvedMessage = resolvedMessage == nil && hasMessageFilters() ? "\(message())" : nil
         
-        if logEnabled && shouldLevelBeLogged(level, path: file, function: function, message: resolvedMessage) {
+        if shouldLevelBeLogged(level, path: file, function: function, message: resolvedMessage) {
             let msgStr = resolvedMessage == nil ? "\(message())" : resolvedMessage!
             let f = stripParams(function: function)
 
             LHWLogQueue.dispatchOnQueue({
-                guard let output = LHWLogFileHandle else {
-                    return
+                if self.logToFileEnabled {
+                    if let output = LHWLogFileHandle {
+                        guard let formattedString = self.send(level, msg: msgStr, file: file, function: f, line: line, logToFile: self.logToFileEnabled) else {
+                            return
+                        }
+                        
+                        let line = formattedString + "\n"
+                        if let data = line.data(using: .utf8) {
+                            output.write(data)
+                        }
+                    }
                 }
                 
                 if let formattedString = self.send(level, msg: msgStr, file: file, function: f, line: line) {
-                    guard let data = formattedString.data(using: .utf8) else {
-                        return
-                    }
-                    
-                    output.write(data)
-                    output.write(returnData)
                     print(formattedString)
                 }
             }, synchronous: false)
@@ -278,13 +292,13 @@ open class LHWLog {
     /// returns the formatted log message for processing by inheriting method
     /// and for unit tests (nil if error)
     private func send(_ level: ActionStageSwift.Level, msg: String, file: String,
-                   function: String, line: Int) -> String? {
+                      function: String, line: Int, logToFile: Bool = false) -> String? {
         
         if format.hasPrefix("$J") {
             return messageToJSON(level, msg: msg, file: file, function: function, line: line)
             
         } else {
-            return formatMessage(format, level: level, msg: msg, file: file, function: function, line: line)
+            return formatMessage(format, level: level, msg: msg, file: file, function: function, line: line, logToFile: logToFile)
         }
     }
     
@@ -292,7 +306,7 @@ open class LHWLog {
     
     /// returns the log message based on the format pattern
     private func formatMessage(_ format: String, level: ActionStageSwift.Level,
-                               msg: String, file: String, function: String, line: Int) -> String {
+                               msg: String, file: String, function: String, line: Int, logToFile: Bool = false) -> String {
         
         var text = ""
         let phrases: [String] = format.components(separatedBy: "$")
@@ -330,9 +344,11 @@ open class LHWLog {
                     text += remainingPhrase
                 case "C":
                     // color code ("" on default)
-                    text += escape + colorForLevel(level) + remainingPhrase
+                    let esc = logToFile ? escape : ""
+                    text += esc + colorForLevel(level, logToFile) + remainingPhrase
                 case "c":
-                    text += reset + remainingPhrase
+                    let res = logToFile ? reset : ""
+                    text += res + remainingPhrase
                 default:
                     text += phrase
                 }
@@ -380,24 +396,24 @@ open class LHWLog {
     }
     
     /// returns color string for level
-    private func colorForLevel(_ level: ActionStageSwift.Level) -> String {
+    private func colorForLevel(_ level: ActionStageSwift.Level, _ logToFile: Bool = false) -> String {
         var color = ""
         
         switch level {
         case ActionStageSwift.Level.debug:
-            color = levelColor.debug
+            color = logToFile ? fileLevelColor.debug : levelColor.debug
             
         case ActionStageSwift.Level.info:
-            color = levelColor.info
+            color =  logToFile ? fileLevelColor.info : levelColor.info
             
         case ActionStageSwift.Level.warning:
-            color = levelColor.warning
+            color =  logToFile ? fileLevelColor.warning : levelColor.warning
             
         case ActionStageSwift.Level.error:
-            color = levelColor.error
+            color =  logToFile ? fileLevelColor.error : levelColor.error
             
         default:
-            color = levelColor.verbose
+            color =  logToFile ? fileLevelColor.verbose : levelColor.verbose
         }
         return color
     }

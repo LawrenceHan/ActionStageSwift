@@ -82,10 +82,10 @@ extension Array where Element: AnyObject {
 public let LHWDocumentsPath: String = {
     var path: String? = nil
     let groupName = "group."+Bundle.main.bundleIdentifier!
-    if let groupURL = LHWActionStage.GlobalFileManager.containerURL(forSecurityApplicationGroupIdentifier: groupName) {
+    if let groupURL = GlobalFileManager.containerURL(forSecurityApplicationGroupIdentifier: groupName) {
         let documentsPathURL = groupURL.appendingPathComponent("Documents")
         do {
-            try LHWActionStage.GlobalFileManager.createDirectory(at: documentsPathURL, withIntermediateDirectories: true, attributes: nil)
+            try GlobalFileManager.createDirectory(at: documentsPathURL, withIntermediateDirectories: true, attributes: nil)
         } catch {
         }
         path = documentsPathURL.path
@@ -99,10 +99,10 @@ public let LHWDocumentsPath: String = {
 public let LHWCachesPath: String = {
     var path: String? = nil
     let groupName = "group."+Bundle.main.bundleIdentifier!
-    if let groupURL = LHWActionStage.GlobalFileManager.containerURL(forSecurityApplicationGroupIdentifier: groupName) {
+    if let groupURL = GlobalFileManager.containerURL(forSecurityApplicationGroupIdentifier: groupName) {
         let documentsPathURL = groupURL.appendingPathComponent("Caches")
         do {
-            try LHWActionStage.GlobalFileManager.createDirectory(at: documentsPathURL, withIntermediateDirectories: true, attributes: nil)
+            try GlobalFileManager.createDirectory(at: documentsPathURL, withIntermediateDirectories: true, attributes: nil)
         } catch {
         }
         path = documentsPathURL.path
