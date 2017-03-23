@@ -120,7 +120,7 @@ open class LHWLog {
     }
     
     // MARK: - Properties
-    open var debugLogger.debug = false // set to true to debug the internal filter logic of the class
+    open var debugPrint = false // set to true to debug the internal filter logic of the class
     var reset = "\u{001b}[0m"
     var escape = "\u{001b}[38;5;"
     
@@ -516,12 +516,12 @@ open class LHWLog {
         
         if filters.isEmpty {
             if level.rawValue >= minLevel.rawValue {
-                if debugLogger.debug {
+                if debugPrint {
                     Logger.debug("filters is empty and level >= minLevel")
                 }
                 return true
             } else {
-                if debugLogger.debug {
+                if debugPrint {
                     Logger.debug("filters is empty and level < minLevel")
                 }
                 return false
@@ -531,7 +531,7 @@ open class LHWLog {
         let (matchedExclude, allExclude) = passedExcludedFilters(level, path: path,
                                                                  function: function, message: message)
         if allExclude > 0 && matchedExclude != allExclude {
-            if debugLogger.debug {
+            if debugPrint {
                 Logger.debug("filters is not empty and message was excluded")
             }
             return false
@@ -558,7 +558,7 @@ open class LHWLog {
         }
         
         if level.rawValue < minLevel.rawValue {
-            if debugLogger.debug {
+            if debugPrint {
                 Logger.debug("filters is not empty and level < minLevel")
             }
             return false
@@ -582,7 +582,7 @@ open class LHWLog {
         
         let matchingFilters = applyFilters(requiredFilters, level: level, path: path,
                                            function: function, message: message)
-        if debugLogger.debug {
+        if debugPrint {
             Logger.debug("matched \(matchingFilters) of \(requiredFilters.count) required filters")
         }
         
@@ -598,7 +598,7 @@ open class LHWLog {
         
         let matchingFilters = applyFilters(nonRequiredFilters, level: level,
                                            path: path, function: function, message: message)
-        if debugLogger.debug {
+        if debugPrint {
             Logger.debug("matched \(matchingFilters) of \(nonRequiredFilters.count) non-required filters")
         }
         return (matchingFilters, nonRequiredFilters.count)
@@ -613,7 +613,7 @@ open class LHWLog {
         
         let matchingFilters = applyFilters(excludeFilters, level: level,
                                            path: path, function: function, message: message)
-        if debugLogger.debug {
+        if debugPrint {
             Logger.debug("matched \(matchingFilters) of \(excludeFilters.count) exclude filters")
         }
         return (matchingFilters, excludeFilters.count)

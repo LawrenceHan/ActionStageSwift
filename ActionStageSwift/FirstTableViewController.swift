@@ -17,6 +17,21 @@ class FirstTableViewController: UITableViewController, LHWWatcher {
         super.viewDidLoad()
         actionHandler = LHWHandler(delegate: self)
         ActionStageInstance.watchForPath("/mg/newcell/(11)", watcher: self)
+        
+        let colorImage: UIImage
+        
+        UIGraphicsBeginImageContextWithOptions(CGSize(width: 100, height: 44), false, 0.0)
+        let currentContext: CGContext = UIGraphicsGetCurrentContext()!
+        UIColor.blue.setFill()
+        currentContext.fill(CGRect(
+            x: 0,
+            y: 0,
+            width: 100,
+            height: 44
+        ))
+        
+        colorImage = UIGraphicsGetImageFromCurrentImageContext()!
+        UIGraphicsEndImageContext()
     }
     
     deinit {
