@@ -81,7 +81,7 @@ public class LHWFilter {
     
     /// returns true of set minLevel is >= as given level
     public func reachedMinLevel(_ level: ActionStageSwift.Level) -> Bool {
-        //print("checking if given level \(level) >= \(minLevel)")
+        //Logger.debug("checking if given level \(level) >= \(minLevel)")
         return level.rawValue >= minLevel.rawValue
     }
 }

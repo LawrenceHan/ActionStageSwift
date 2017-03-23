@@ -68,7 +68,7 @@ class FirstTableViewController: UITableViewController, LHWWatcher {
             LHWDispatchOnMainThread {
                 self.tableView.reloadData()
                 let filePaths = Logger.getFilePaths(count: 5)
-                print(filePaths)
+                Logger.debug(filePaths)
             }
         }
     }

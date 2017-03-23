@@ -120,7 +120,7 @@ open class LHWLog {
     }
     
     // MARK: - Properties
-    open var debugPrint = false // set to true to debug the internal filter logic of the class
+    open var debugLogger.debug = false // set to true to debug the internal filter logic of the class
     var reset = "\u{001b}[0m"
     var escape = "\u{001b}[38;5;"
     
@@ -272,7 +272,7 @@ open class LHWLog {
                 }
                 
                 if let formattedString = self.send(level, msg: msgStr, file: file, function: f, line: line) {
-                    print(formattedString)
+                    Logger.debug(formattedString)
                 }
             }, synchronous: false)
         }
@@ -476,7 +476,7 @@ open class LHWLog {
             let jsonData = try JSONSerialization.data(withJSONObject: dict, options: [])
             jsonString = String(data: jsonData, encoding: .utf8)
         } catch {
-            print("LHWLog could not create JSON from dict.")
+            Logger.debug("LHWLog could not create JSON from dict.")
         }
         return jsonString
     }
@@ -516,13 +516,13 @@ open class LHWLog {
         
         if filters.isEmpty {
             if level.rawValue >= minLevel.rawValue {
-                if debugPrint {
-                    print("filters is empty and level >= minLevel")
+                if debugLogger.debug {
+                    Logger.debug("filters is empty and level >= minLevel")
                 }
                 return true
             } else {
-                if debugPrint {
-                    print("filters is empty and level < minLevel")
+                if debugLogger.debug {
+                    Logger.debug("filters is empty and level < minLevel")
                 }
                 return false
             }
@@ -531,8 +531,8 @@ open class LHWLog {
         let (matchedExclude, allExclude) = passedExcludedFilters(level, path: path,
                                                                  function: function, message: message)
         if allExclude > 0 && matchedExclude != allExclude {
-            if debugPrint {
-                print("filters is not empty and message was excluded")
+            if debugLogger.debug {
+                Logger.debug("filters is not empty and message was excluded")
             }
             return false
         }
@@ -558,8 +558,8 @@ open class LHWLog {
         }
         
         if level.rawValue < minLevel.rawValue {
-            if debugPrint {
-                print("filters is not empty and level < minLevel")
+            if debugLogger.debug {
+                Logger.debug("filters is not empty and level < minLevel")
             }
             return false
         }
@@ -582,8 +582,8 @@ open class LHWLog {
         
         let matchingFilters = applyFilters(requiredFilters, level: level, path: path,
                                            function: function, message: message)
-        if debugPrint {
-            print("matched \(matchingFilters) of \(requiredFilters.count) required filters")
+        if debugLogger.debug {
+            Logger.debug("matched \(matchingFilters) of \(requiredFilters.count) required filters")
         }
         
         return (matchingFilters, requiredFilters.count)
@@ -598,8 +598,8 @@ open class LHWLog {
         
         let matchingFilters = applyFilters(nonRequiredFilters, level: level,
                                            path: path, function: function, message: message)
-        if debugPrint {
-            print("matched \(matchingFilters) of \(nonRequiredFilters.count) non-required filters")
+        if debugLogger.debug {
+            Logger.debug("matched \(matchingFilters) of \(nonRequiredFilters.count) non-required filters")
         }
         return (matchingFilters, nonRequiredFilters.count)
     }
@@ -613,8 +613,8 @@ open class LHWLog {
         
         let matchingFilters = applyFilters(excludeFilters, level: level,
                                            path: path, function: function, message: message)
-        if debugPrint {
-            print("matched \(matchingFilters) of \(excludeFilters.count) exclude filters")
+        if debugLogger.debug {
+            Logger.debug("matched \(matchingFilters) of \(excludeFilters.count) exclude filters")
         }
         return (matchingFilters, excludeFilters.count)
     }
