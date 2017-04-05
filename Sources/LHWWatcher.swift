@@ -37,7 +37,7 @@ public protocol LHWWatcher {
     func actorMessageReceived(path: String, messageType: String?, message: Any?)
 }
 
-extension LHWWatcher {
+public extension LHWWatcher {
     func actorCompleted(status: LHWActionStageStatus, path: String, result: Any?) {
     }
     
