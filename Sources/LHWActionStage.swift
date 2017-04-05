@@ -893,7 +893,7 @@ open class LHWActionStage {
         }
         
         if requestQueue.count == 0 {
-            Logger.debug("===== Warning request queue \"\(requestActor.requestQueueName) is empty.\"")
+            Logger.debug("===== Warning request queue \"\(requestActor.requestQueueName ?? "") is empty.\"")
         } else {
             if requestQueue[0] === requestActor {
                 requestQueue.remove(at: 0)
@@ -915,7 +915,7 @@ open class LHWActionStage {
                         requestQueue.remove(at: index)
                     }
                 } else {
-                    Logger.debug("===== Warning request queue \"\(requestActor.requestQueueName)\" doesn't contain request to \(requestActor.path)")
+                    Logger.debug("===== Warning request queue \"\(requestActor.requestQueueName ?? "")\" doesn't contain request to \(requestActor.path)")
                 }
             }
         }

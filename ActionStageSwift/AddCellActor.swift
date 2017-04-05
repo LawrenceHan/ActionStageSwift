@@ -34,6 +34,6 @@ class AddCellActor: LHWActor {
     }
     
     override func watcherJoined(watcherHandler: LHWHandler, options: [String : Any]?, waitingInActorQueue: Bool) {
-        Logger.debug("joined handler: \(watcherHandler), options: \(options), path: \(path)")
+        Logger.debug("joined handler: \(watcherHandler), options: \(options ?? [:]), path: \(path)")
     }
 }
