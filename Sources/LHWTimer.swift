@@ -102,8 +102,8 @@ open class LHWTimer {
     }
     
     open func remainingTime() -> TimeInterval {
-        if timeoutDate < Double(FLT_EPSILON) {
-            return DBL_MAX
+        if timeoutDate < Double(Float.ulpOfOne) {
+            return Double.greatestFiniteMagnitude
         } else {
             return timeoutDate - (CFAbsoluteTimeGetCurrent() + kCFAbsoluteTimeIntervalSince1970)
         }
