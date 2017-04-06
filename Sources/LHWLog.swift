@@ -272,7 +272,7 @@ open class LHWLog {
                 }
                 
                 if let formattedString = self.send(level, msg: msgStr, file: file, function: f, line: line) {
-                    Logger.debug(formattedString)
+                    print(formattedString)
                 }
             }, synchronous: false)
         }
@@ -476,7 +476,7 @@ open class LHWLog {
             let jsonData = try JSONSerialization.data(withJSONObject: dict, options: [])
             jsonString = String(data: jsonData, encoding: .utf8)
         } catch {
-            Logger.debug("LHWLog could not create JSON from dict.")
+            print("LHWLog could not create JSON from dict.")
         }
         return jsonString
     }
@@ -517,12 +517,12 @@ open class LHWLog {
         if filters.isEmpty {
             if level.rawValue >= minLevel.rawValue {
                 if debugPrint {
-                    Logger.debug("filters is empty and level >= minLevel")
+                    print("filters is empty and level >= minLevel")
                 }
                 return true
             } else {
                 if debugPrint {
-                    Logger.debug("filters is empty and level < minLevel")
+                    print("filters is empty and level < minLevel")
                 }
                 return false
             }
@@ -532,7 +532,7 @@ open class LHWLog {
                                                                  function: function, message: message)
         if allExclude > 0 && matchedExclude != allExclude {
             if debugPrint {
-                Logger.debug("filters is not empty and message was excluded")
+                print("filters is not empty and message was excluded")
             }
             return false
         }
@@ -559,7 +559,7 @@ open class LHWLog {
         
         if level.rawValue < minLevel.rawValue {
             if debugPrint {
-                Logger.debug("filters is not empty and level < minLevel")
+                print("filters is not empty and level < minLevel")
             }
             return false
         }
@@ -583,7 +583,7 @@ open class LHWLog {
         let matchingFilters = applyFilters(requiredFilters, level: level, path: path,
                                            function: function, message: message)
         if debugPrint {
-            Logger.debug("matched \(matchingFilters) of \(requiredFilters.count) required filters")
+            print("matched \(matchingFilters) of \(requiredFilters.count) required filters")
         }
         
         return (matchingFilters, requiredFilters.count)
@@ -599,7 +599,7 @@ open class LHWLog {
         let matchingFilters = applyFilters(nonRequiredFilters, level: level,
                                            path: path, function: function, message: message)
         if debugPrint {
-            Logger.debug("matched \(matchingFilters) of \(nonRequiredFilters.count) non-required filters")
+            print("matched \(matchingFilters) of \(nonRequiredFilters.count) non-required filters")
         }
         return (matchingFilters, nonRequiredFilters.count)
     }
@@ -614,7 +614,7 @@ open class LHWLog {
         let matchingFilters = applyFilters(excludeFilters, level: level,
                                            path: path, function: function, message: message)
         if debugPrint {
-            Logger.debug("matched \(matchingFilters) of \(excludeFilters.count) exclude filters")
+            print("matched \(matchingFilters) of \(excludeFilters.count) exclude filters")
         }
         return (matchingFilters, excludeFilters.count)
     }

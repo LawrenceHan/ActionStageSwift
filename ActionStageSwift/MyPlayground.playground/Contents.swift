@@ -20,6 +20,6 @@ var users: [User?] = [user1, user2, user3]
 var user4: User? = User()
 user4?.name = "4"
 
-users.append(user4)
-user4 = nil
-print(users.count)
+func addUser() {
+    
+}
