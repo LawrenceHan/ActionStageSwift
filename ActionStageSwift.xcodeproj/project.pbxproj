@@ -26,6 +26,7 @@
 		02AD24C81E6EA17D00B18028 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02AD24C71E6EA17D00B18028 /* ViewController.swift */; };
 		02AD24CB1E6EA17D00B18028 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 02AD24C91E6EA17D00B18028 /* Main.storyboard */; };
 		02AD24CD1E6EA17D00B18028 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 02AD24CC1E6EA17D00B18028 /* Assets.xcassets */; };
+		02D33F1D1E972B190076E81C /* TestButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02D33F1C1E972B190076E81C /* TestButton.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -51,6 +52,7 @@
 		02AD24CA1E6EA17D00B18028 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		02AD24CC1E6EA17D00B18028 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		02AD24D11E6EA17D00B18028 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		02D33F1C1E972B190076E81C /* TestButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestButton.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -112,6 +114,7 @@
 				02AD24D11E6EA17D00B18028 /* Info.plist */,
 				021305D71E72AEC700FA05E2 /* AddCellActor.swift */,
 				02500AD31E7FCFC6002C188E /* MyPlayground.playground */,
+				02D33F1C1E972B190076E81C /* TestButton.swift */,
 			);
 			path = ActionStageSwift;
 			sourceTree = "<group>";
@@ -196,6 +199,7 @@
 				02500AD21E7EC7AD002C188E /* LHWLog.swift in Sources */,
 				021306351E75303B00FA05E2 /* LHWHandler.swift in Sources */,
 				0233BF281E7257E9001168D5 /* SecondTableViewController.swift in Sources */,
+				02D33F1D1E972B190076E81C /* TestButton.swift in Sources */,
 				021305D81E72AEC700FA05E2 /* AddCellActor.swift in Sources */,
 				0233BF261E7257E2001168D5 /* FirstTableViewController.swift in Sources */,
 				02AD24C81E6EA17D00B18028 /* ViewController.swift in Sources */,
