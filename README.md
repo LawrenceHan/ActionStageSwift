@@ -70,6 +70,10 @@ class AddCellActor: LHWActor {
 }
 ```
 
+#### Register an actor
+
+```LHWActor.registerActorClass(AddCellActor.self)```
+
 #### Call an actor
 
 ``` swift
