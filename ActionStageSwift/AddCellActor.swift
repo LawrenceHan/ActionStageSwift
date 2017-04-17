@@ -28,12 +28,16 @@ class AddCellActor: LHWActor {
         }
         
         ActionStageInstance.dispatchResource(path: path, resource: text, arguments: nil)
-        DispatchQueue.global().asyncAfter(deadline: .now() + 0.1) {
+        DispatchQueue.global().asyncAfter(deadline: .now() + 0.1) { [weak self] in
+            guard let `self` = self else { return }
             ActionStageInstance.actionCompleted(self.path)
         }
     }
     
+    deinit {
+        Logger.debug("\(self) dealloced")
+    }
     override func watcherJoined(watcherHandler: LHWHandler, options: [String : Any]?, waitingInActorQueue: Bool) {
-        Logger.debug("joined handler: \(watcherHandler), options: \(options ?? [:]), path: \(path)")
+//        Logger.debug("joined handler: \(watcherHandler), options: \(options ?? [:]), path: \(path)")
     }
 }

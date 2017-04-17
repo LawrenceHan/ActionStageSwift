@@ -17,7 +17,7 @@ class TestButton: UIButton {
                 var bounds = self.bounds
                 bounds.origin.x -= extendedEdgeInsets.left
                 bounds.size.width += extendedEdgeInsets.left + extendedEdgeInsets.right
-                bounds.origin.y -= extendedEdgeInsets.top + extendedEdgeInsets.bottom
+                bounds.origin.y -= extendedEdgeInsets.top
                 bounds.size.height += extendedEdgeInsets.top + extendedEdgeInsets.bottom
                 if bounds.contains(point) {
                     return self

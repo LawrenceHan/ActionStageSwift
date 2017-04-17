@@ -27,6 +27,7 @@
 		02AD24CB1E6EA17D00B18028 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 02AD24C91E6EA17D00B18028 /* Main.storyboard */; };
 		02AD24CD1E6EA17D00B18028 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 02AD24CC1E6EA17D00B18028 /* Assets.xcassets */; };
 		02D33F1D1E972B190076E81C /* TestButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02D33F1C1E972B190076E81C /* TestButton.swift */; };
+		02D33F241EA495CB0076E81C /* TestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02D33F231EA495CB0076E81C /* TestViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -53,6 +54,7 @@
 		02AD24CC1E6EA17D00B18028 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		02AD24D11E6EA17D00B18028 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		02D33F1C1E972B190076E81C /* TestButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestButton.swift; sourceTree = "<group>"; };
+		02D33F231EA495CB0076E81C /* TestViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -108,6 +110,7 @@
 				02AD24C71E6EA17D00B18028 /* ViewController.swift */,
 				0233BF251E7257E2001168D5 /* FirstTableViewController.swift */,
 				0233BF271E7257E9001168D5 /* SecondTableViewController.swift */,
+				02D33F231EA495CB0076E81C /* TestViewController.swift */,
 				02AD24C91E6EA17D00B18028 /* Main.storyboard */,
 				0233BF311E7272F9001168D5 /* Launch Screen.storyboard */,
 				02AD24CC1E6EA17D00B18028 /* Assets.xcassets */,
@@ -208,6 +211,7 @@
 				021306381E75303B00FA05E2 /* LHWWatcher.swift in Sources */,
 				021306311E75303B00FA05E2 /* LHWActionStage.swift in Sources */,
 				021306331E75303B00FA05E2 /* LHWCommon.swift in Sources */,
+				02D33F241EA495CB0076E81C /* TestViewController.swift in Sources */,
 				02AD24C61E6EA17D00B18028 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -42,10 +42,10 @@ class FirstTableViewController: UITableViewController, LHWWatcher {
     @IBAction func addCell(_ sender: UIBarButtonItem) {
         let options = ["text": "new cell \(array.count+1)"]
         ActionStageInstance.requestActor(path: "/mg/newcell/(11)", options: options, watcher: self)
-        ActionStageInstance.requestActor(path: "/mg/newcell/(11)", options: options, watcher: self)
-        ActionStageInstance.requestActor(path: "/mg/newcell/(11)", options: options, watcher: self)
-        ActionStageInstance.requestActor(path: "/mg/newcell/(11)", options: options, watcher: self)
-        ActionStageInstance.requestActor(path: "/mg/newcell/(11)", options: options, watcher: self)
+//        ActionStageInstance.requestActor(path: "/mg/newcell/(11)", options: options, watcher: self)
+//        ActionStageInstance.requestActor(path: "/mg/newcell/(11)", options: options, watcher: self)
+//        ActionStageInstance.requestActor(path: "/mg/newcell/(11)", options: options, watcher: self)
+//        ActionStageInstance.requestActor(path: "/mg/newcell/(11)", options: options, watcher: self)
     }
 
     override func didReceiveMemoryWarning() {
@@ -75,6 +75,10 @@ class FirstTableViewController: UITableViewController, LHWWatcher {
     }
  
 
+    func actorCompleted(status: LHWActionStageStatus, path: String, result: Any?) {
+        Logger.debug("\(path) is done")
+    }
+    
     func actionStageResourceDispatched(path: String, resource: Any?, arguments: Any?) {
         if path == "/mg/newcell/(11)" {
             let text = resource as! String
@@ -82,8 +86,8 @@ class FirstTableViewController: UITableViewController, LHWWatcher {
             
             LHWDispatchOnMainThread {
                 self.tableView.reloadData()
-                let filePaths = Logger.getFilePaths(count: 5)
-                Logger.debug(filePaths)
+//                let filePaths = Logger.getFilePaths(count: 5)
+//                Logger.debug(filePaths)
             }
         }
     }
