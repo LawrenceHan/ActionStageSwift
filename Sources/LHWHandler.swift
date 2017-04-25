@@ -74,7 +74,7 @@ open class LHWHandler {
         return result
     }
     
-    func requestAction(_ action: String, options: Dictionary<String, Any>) {
+    open func requestAction(_ action: String, options: Dictionary<String, Any>) {
         guard let delegate = _delegate else { return }
         
         delegate.actionStageActionRequested(action, options: options)
@@ -86,7 +86,7 @@ open class LHWHandler {
         }
     }
     
-    func receiveActorMessage(path: String, messageType: String? = nil, message: Any? = nil) {        
+    open func receiveActorMessage(path: String, messageType: String? = nil, message: Any? = nil) {
         _delegate?.actorMessageReceived(path: path, messageType: messageType, message: message)
         
         if releaseOnMainThread && !Thread.isMainThread {
@@ -96,7 +96,7 @@ open class LHWHandler {
         }
     }
     
-    func notifyResourceDispatched(path: String, resource: Any, arguments: Any? = nil) {
+    open func notifyResourceDispatched(path: String, resource: Any, arguments: Any? = nil) {
         guard let delegate = _delegate else { return }
         
         delegate.actionStageResourceDispatched(path: path, resource: resource, arguments: arguments)
