@@ -452,7 +452,9 @@ open class LHWActionStage {
     }
     
     open func removeWatcher(_ watcher: LHWWatcher) {
-        removeWatcherByHandler(watcher.actionHandler!)
+        if let handler = watcher.actionHandler {
+            removeWatcherByHandler(handler)
+        }
     }
     
     open func removeWatcherByHandler(_ actionHandler: LHWHandler, fromPath: String) {
