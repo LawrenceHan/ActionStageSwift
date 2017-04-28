@@ -29,8 +29,8 @@ import Foundation
 
 open class LHWHandler {
     // MARK: -
-    private var _delegate: LHWWatcher?
-    open var delegate: LHWWatcher? {
+    private weak var _delegate: LHWWatcher?
+    open weak var delegate: LHWWatcher? {
         get {
             var result: LHWWatcher? = nil
             

@@ -24,4 +24,8 @@ func addUser() {
     
 }
 
+let a1 = [1, 2, 3]
+let a2 = [1, 2, 3]
+let a3 = a1.filter { !a2.contains($0) }
+a3.count
 

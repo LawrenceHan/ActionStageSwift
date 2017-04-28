@@ -32,6 +32,8 @@ class FirstTableViewController: UITableViewController, LHWWatcher {
         
         colorImage = UIGraphicsGetImageFromCurrentImageContext()!
         UIGraphicsEndImageContext()
+        
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(showTest))
     }
     
     deinit {
@@ -48,6 +50,12 @@ class FirstTableViewController: UITableViewController, LHWWatcher {
 //        ActionStageInstance.requestActor(path: "/mg/newcell/(11)", options: options, watcher: self)
     }
 
+    func showTest(_ sender: UIBarButtonItem) {
+        let test = TestViewController()
+        let nav = UINavigationController(rootViewController: test)
+        present(nav, animated: true, completion: nil)
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.

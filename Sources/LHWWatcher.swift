@@ -27,7 +27,7 @@
 
 import Foundation
 
-public protocol LHWWatcher {
+public protocol LHWWatcher: class {
     var actionHandler: LHWHandler? { get }
     
     func actorCompleted(status: LHWActionStageStatus, path: String, result: Any?)
