@@ -1,5 +1,6 @@
 //
-//  ActionStageSwift
+//  SwiftyBeaver.swift
+//  SwiftyBeaver
 //
 //  Created by Sebastian Kreutzberger on 05.12.15.
 //  Copyright © 2015 Sebastian Kreutzberger
@@ -293,10 +294,9 @@ open class LHWLog {
     /// and for unit tests (nil if error)
     private func send(_ level: ActionStageSwift.Level, msg: String, file: String,
                       function: String, line: Int, logToFile: Bool = false) -> String? {
-        
+
         if format.hasPrefix("$J") {
             return messageToJSON(level, msg: msg, file: file, function: function, line: line)
-            
         } else {
             return formatMessage(format, level: level, msg: msg, file: file, function: function, line: line, logToFile: logToFile)
         }

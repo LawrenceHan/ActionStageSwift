@@ -33,7 +33,7 @@ public protocol LHWWatcher: class {
     func actorCompleted(status: LHWActionStageStatus, path: String, result: Any?)
     func actorReportedProgress(path: String, progress: Float)
     func actionStageResourceDispatched(path: String, resource: Any?, arguments: Any?)
-    func actionStageActionRequested(_ action: String, options: Dictionary<String, Any>?)
+    func actionStageActionRequested(_ action: String, options: [String: Any]?)
     func actorMessageReceived(path: String, messageType: String?, message: Any?)
 }
 
@@ -47,7 +47,7 @@ public extension LHWWatcher {
     func actionStageResourceDispatched(path: String, resource: Any?, arguments: Any?) {
     }
     
-    func actionStageActionRequested(_ action: String, options: Dictionary<String, Any>?) {
+    func actionStageActionRequested(_ action: String, options: [String: Any]?) {
     }
     
     func actorMessageReceived(path: String, messageType: String?, message: Any?) {

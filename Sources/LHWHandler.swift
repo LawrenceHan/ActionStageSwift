@@ -74,7 +74,7 @@ open class LHWHandler {
         return result
     }
     
-    open func requestAction(_ action: String, options: Dictionary<String, Any>) {
+    open func requestAction(_ action: String, options: [String: Any]?) {
         guard let delegate = _delegate else { return }
         
         delegate.actionStageActionRequested(action, options: options)

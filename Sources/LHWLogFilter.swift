@@ -1,6 +1,6 @@
 //
 //  Filter.swift
-//  ActionStageSwift
+//  SwiftyBeaver
 //
 //  Created by Jeff Roberts on 5/31/16.
 //  Copyright © 2015 Sebastian Kreutzberger
