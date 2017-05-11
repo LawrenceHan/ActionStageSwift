@@ -59,7 +59,7 @@ open class LHWActionStage {
     private var actorMessagesWatchers: [String: [LHWHandler]]
     
     private init() {
-        requestQueues = [String: Array<LHWActor>]()
+        requestQueues = [String: [LHWActor]]()
         activeRequests = [String: Any]()
 //        cancelRequestTimers = [String: Any]()
         liveNodeWatchers = [String: [LHWHandler]]()
@@ -207,7 +207,7 @@ open class LHWActionStage {
     
     open func isExecutingActorsWithGenericPath(genericPath: String) -> Bool {
         if !isCurrentQueueStageQueue() {
-            Logger.debug("\(#function) should be called from graph queue")
+            Logger.debug("should be called from graph queue")
             return false
         }
         
@@ -233,7 +233,7 @@ open class LHWActionStage {
     
     open func isExecutingActorsWithPathPrefix(pathPrefix: String) -> Bool {
         if !isCurrentQueueStageQueue() {
-            Logger.debug("\(#function) should be called from graph queue")
+            Logger.debug("should be called from graph queue")
             return false
         }
         
@@ -248,9 +248,9 @@ open class LHWActionStage {
         return result
     }
     
-    open func executingActorsWithPathPrefix(_ pathPrefix: String) -> Array<LHWActor>? {
+    open func executingActorsWithPathPrefix(_ pathPrefix: String) -> [LHWActor]? {
         if !isCurrentQueueStageQueue() {
-            Logger.debug("\(#function) should be called from graph queue")
+            Logger.debug("should be called from graph queue")
             return nil
         }
         
@@ -274,7 +274,7 @@ open class LHWActionStage {
     
     open func executingActorWithPath(_ path: String) -> LHWActor? {
         if !isCurrentQueueStageQueue() {
-            Logger.debug("\(#function) should be called from graph queue")
+            Logger.debug("should be called from graph queue")
             return nil
         }
         
@@ -291,7 +291,7 @@ open class LHWActionStage {
     
     open func watchForPath(_ path:String, watcher: LHWWatcher) {
         guard let actionHandler = watcher.actionHandler else {
-            Logger.debug("===== Warning: actionHandler is nil in \(#function):\(#line)")
+            Logger.debug("===== Warning: actionHandler is nil")
             return
         }
         
@@ -308,9 +308,9 @@ open class LHWActionStage {
         }
     }
     
-    open func watchForPaths(_ paths: Array<String>, watcher: LHWWatcher) {
+    open func watchForPaths(_ paths: [String], watcher: LHWWatcher) {
         guard let actionHandler = watcher.actionHandler else {
-            Logger.debug("===== Warning: actionHandler is nil in \(#function):\(#line)")
+            Logger.debug("===== Warning: actionHandler is nil")
             return
         }
         
@@ -331,7 +331,7 @@ open class LHWActionStage {
     
     open func watchForGenericPath(_ path: String, watcher: LHWWatcher) {
         guard let actionHandler = watcher.actionHandler else {
-            Logger.debug("===== Warning: actionHandler is nil in \(#function):\(#line)")
+            Logger.debug("===== Warning: actionHandler is nil")
             return
         }
         
@@ -349,7 +349,7 @@ open class LHWActionStage {
     
     open func watchForMessagesToWatchersAtGenericPath(_ genericPath: String, watcher: LHWWatcher) {
         guard let actionHandler = watcher.actionHandler else {
-            Logger.debug("===== Warning: actionHandler is nil in \(#function):\(#line)")
+            Logger.debug("===== Warning: actionHandler is nil")
             return
         }
         
@@ -778,13 +778,13 @@ open class LHWActionStage {
     
     private func _requestGeneric(joinOnly: Bool, inCurrentQueue: Bool, path: String, options: [String: Any]?, flags: Int, watcher: LHWWatcher) {
         guard let actionHandler = watcher.actionHandler else {
-            Logger.debug("===== Warning: actionHandler is nil in \(#function):\(#line)")
+            Logger.debug("===== Warning: actionHandler is nil")
             return
         }
         
         let requestClosure = {
             if !actionHandler.hasDelegate() {
-                Logger.debug("===== Error: \(#function):\(#line) actionHandler.delegate is nil")
+                Logger.debug("===== Error: actionHandler.delegate is nil")
                 return
             }
             
@@ -840,7 +840,7 @@ open class LHWActionStage {
                     requestActor.storedOptions = options
                 }
             } else {
-                if var watchers = requestInfo!["watchers"] as? Array<LHWHandler> {
+                if var watchers = requestInfo!["watchers"] as? [LHWHandler] {
                     if !(watchers.contains(where: { $0 === actionHandler })) {
                         Logger.debug("Joining watcher to the wathcers of \"\(path)\"")
                         watchers.append(actionHandler)

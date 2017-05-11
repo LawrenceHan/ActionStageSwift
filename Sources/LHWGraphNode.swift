@@ -27,7 +27,7 @@
 
 import Foundation
 
-open  class LHWGraphObjectNode: LHWGraphNode {
+open class LHWGraphObjectNode: LHWGraphNode {
     var items: [Any] = [Any]()
     
     init(items: [Any]) {
