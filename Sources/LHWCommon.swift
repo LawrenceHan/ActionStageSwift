@@ -28,6 +28,7 @@
 import Foundation
 
 // MRAK: - Threading
+
 public func LHW_MUTEXLOCKER_INIT() -> pthread_mutex_t {
     var mutex: pthread_mutex_t = pthread_mutex_t()
     pthread_mutex_init(&mutex, nil)
@@ -112,16 +113,3 @@ public let LHWCachesPath: String = {
     
     return path!
 }()
-
-
-
-
-
-
-
-
-
-
-
-
-

@@ -27,15 +27,17 @@
 
 import Foundation
 
-open class LHWTimer {
-    // MARK: -
-    var timeoutDate: TimeInterval = Double(INTMAX_MAX)
+public final class LHWTimer {
     
-    private var timer: DispatchSourceTimer? = nil
-    private var timeout: TimeInterval
-    private var shouldRepeat = false
-    private var completion: (() -> Void)?
-    private var queue: DispatchQueue
+    // MARK: -
+    
+    public var timeoutDate: TimeInterval = Double(INTMAX_MAX)
+    
+    fileprivate var timer: DispatchSourceTimer?
+    fileprivate var timeout: TimeInterval
+    fileprivate var shouldRepeat = false
+    fileprivate var completion: (() -> Void)?
+    fileprivate var queue: DispatchQueue
     
     public init(timeout: TimeInterval, shouldRepeat: Bool, completion: @escaping () -> Void, queue: DispatchQueue) {
         self.timeout = timeout
@@ -52,7 +54,8 @@ open class LHWTimer {
     }
     
     // MARK: -
-    open func start() {
+    
+    public func start() {
         timeoutDate = CFAbsoluteTimeGetCurrent() + kCFAbsoluteTimeIntervalSince1970 + timeout
         
         timer = DispatchSource.makeTimerSource(flags: DispatchSource.TimerFlags(rawValue: 0), queue: queue)
@@ -62,7 +65,9 @@ open class LHWTimer {
             timer?.scheduleOneshot(deadline: .now() + timeout)
         }
         
-        timer?.setEventHandler(handler: {
+        timer?.setEventHandler(handler: { [weak self] in
+            guard let `self` = self else { return }
+            
             if let completion = self.completion {
                 completion()
             }
@@ -75,14 +80,14 @@ open class LHWTimer {
         timer?.resume()
     }
     
-    open func fireAndInvalidate() {
-        if let completion = self.completion {
+    public func fireAndInvalidate() {
+        if let completion = completion {
             completion()
         }
-        self.invalidate()
+        invalidate()
     }
     
-    open func invalidate() {
+    public func invalidate() {
         timeoutDate = 0
         if timer != nil {
             timer?.cancel()
@@ -90,18 +95,17 @@ open class LHWTimer {
         }
     }
     
-    open func isScheduled() -> Bool {
+    public func isScheduled() -> Bool {
         return timer != nil
     }
     
-    open func resetTimeout(timeout: TimeInterval) {
+    public func resetTimeout(timeout: TimeInterval) {
         invalidate()
-        
         self.timeout = timeout
         start()
     }
     
-    open func remainingTime() -> TimeInterval {
+    public func remainingTime() -> TimeInterval {
         if timeoutDate < Double(Float.ulpOfOne) {
             return Double.greatestFiniteMagnitude
         } else {

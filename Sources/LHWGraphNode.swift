@@ -27,13 +27,12 @@
 
 import Foundation
 
-open class LHWGraphObjectNode: LHWGraphNode {
-    var items: [Any] = [Any]()
+public final class LHWGraphNode<Element> {
+    public typealias NodeType = Element
     
-    init(items: [Any]) {
+    var items: [NodeType]!
+    
+    init(items: [NodeType]) {
         self.items = items
     }
-}
-
-open class LHWGraphNode {
 }

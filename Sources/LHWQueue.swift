@@ -27,24 +27,19 @@
 
 import Foundation
 
-open class LHWQueue: NSObject {
-    // MARK: -
-    private var _isMainQueue = false
-    private var queue: DispatchQueue?
-    private var name: String
-    private let queueSpecificKey = DispatchSpecificKey<String>()
-    private static let _mainQueue = LHWQueue()
+public final class LHWQueue {
     
-    private override init() {
-        self.name = "com.hanguang.LHWQueue.MainQueue"
-        self.queue = DispatchQueue.main
-        self._isMainQueue = true
-    }
+    // MARK: -
+    
+    fileprivate var _isMainQueue = false
+    fileprivate var queue: DispatchQueue!
+    fileprivate var name: String
+    fileprivate let queueSpecificKey = DispatchSpecificKey<String>()
     
     public init(name: String) {
         self.name = name
         self.queue = DispatchQueue(label: name)
-        self.queue?.setSpecific(key: queueSpecificKey, value: name)
+        self.queue.setSpecific(key: queueSpecificKey, value: name)
     }
     
     deinit {
@@ -52,15 +47,15 @@ open class LHWQueue: NSObject {
     }
     
     // MARK: -
-    open func mainQueue() -> LHWQueue {
-        return ._mainQueue
+    public func mainQueue() -> DispatchQueue {
+        return DispatchQueue.main
     }
     
-    open func nativeQueue() -> DispatchQueue? {
+    public func nativeQueue() -> DispatchQueue {
         return queue
     }
     
-    open func isCurrentQueue() -> Bool {
+    public func isCurrentQueue() -> Bool {
         if queue == nil {
             return false
         }
@@ -72,7 +67,7 @@ open class LHWQueue: NSObject {
         }
     }
     
-    open func dispatchOnQueue(_ closure: @escaping () -> Void, synchronous: Bool) {
+    public func dispatchOnQueue(_ closure: @escaping () -> Void, synchronous: Bool) {
         if let queue = queue {
             if _isMainQueue {
                 if Thread.isMainThread {

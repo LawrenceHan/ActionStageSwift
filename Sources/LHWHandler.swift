@@ -27,12 +27,14 @@
 
 import Foundation
 
-open class LHWHandler {
+public final class LHWHandler {
+    
     // MARK: -
-    private weak var _delegate: LHWWatcher?
-    open weak var delegate: LHWWatcher? {
+    
+    fileprivate weak var _delegate: LHWWatcher?
+    public weak var delegate: LHWWatcher? {
         get {
-            var result: LHWWatcher? = nil
+            var result: LHWWatcher?
             
             LHW_MUTEXLOCKER_LOCK(&_delegateLock)
             result = _delegate
@@ -47,10 +49,11 @@ open class LHWHandler {
             LHW_MUTEXLOCKER_UNLOCK(&_delegateLock)
         }
     }
-    open var releaseOnMainThread: Bool
+    public var releaseOnMainThread: Bool
+    fileprivate var _delegateLock: pthread_mutex_t
     
-    private var _delegateLock: pthread_mutex_t
     // MARK: -
+    
     public init(delegate: LHWWatcher, releaseOnMainThread: Bool = false) {
         self.releaseOnMainThread = releaseOnMainThread
         _delegateLock = LHW_MUTEXLOCKER_INIT()
@@ -58,13 +61,14 @@ open class LHWHandler {
     }
     
     // MARK: -
-    open func reset() {
+    
+    public func reset() {
         LHW_MUTEXLOCKER_LOCK(&_delegateLock)
         _delegate = nil
         LHW_MUTEXLOCKER_UNLOCK(&_delegateLock)
     }
     
-    open func hasDelegate() -> Bool {
+    public func hasDelegate() -> Bool {
         var result = false
         
         LHW_MUTEXLOCKER_LOCK(&_delegateLock)
@@ -74,11 +78,8 @@ open class LHWHandler {
         return result
     }
     
-    open func requestAction(_ action: String, options: [String: Any]?) {
-        guard let delegate = _delegate else { return }
-        
-        delegate.actionStageActionRequested(action, options: options)
-        
+    public func requestAction(_ action: String, options: [String: Any]?) {
+        delegate?.actionStageActionRequested(action, options: options)
         if releaseOnMainThread && !Thread.isMainThread {
             DispatchQueue.main.async {
                 _ = self._delegate.self
@@ -86,9 +87,8 @@ open class LHWHandler {
         }
     }
     
-    open func receiveActorMessage(path: String, messageType: String? = nil, message: Any? = nil) {
+    public func receiveActorMessage(path: String, messageType: String? = nil, message: Any? = nil) {
         _delegate?.actorMessageReceived(path: path, messageType: messageType, message: message)
-        
         if releaseOnMainThread && !Thread.isMainThread {
             DispatchQueue.main.async {
                 _ = self._delegate.self
@@ -96,11 +96,8 @@ open class LHWHandler {
         }
     }
     
-    open func notifyResourceDispatched(path: String, resource: Any, arguments: Any? = nil) {
-        guard let delegate = _delegate else { return }
-        
-        delegate.actionStageResourceDispatched(path: path, resource: resource, arguments: arguments)
-        
+    public func notifyResourceDispatched(path: String, resource: Any, arguments: Any? = nil) {
+        delegate?.actionStageResourceDispatched(path: path, resource: resource, arguments: arguments)
         if releaseOnMainThread && !Thread.isMainThread {
             DispatchQueue.main.async {
                 _ = self._delegate.self

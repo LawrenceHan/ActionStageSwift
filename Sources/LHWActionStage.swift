@@ -710,7 +710,7 @@ open class LHWActionStage {
         }
     }
     
-    open func nodeRetrieved(path: String, node: LHWGraphNode) {
+    open func nodeRetrieved(path: String, node: LHWGraphNode<Any>) {
         actionCompleted(path, result: node)
     }
     
