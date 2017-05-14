@@ -16,7 +16,7 @@ Pod::Spec.new do |s|
   #
 
   s.name         = "ActionStageSwift"
-  s.version      = "0.1.4"
+  s.version      = "0.1.5"
   s.summary      = "This is a Swift version of ActionStage."
 
   # This description is used to generate tags and improve search results.
