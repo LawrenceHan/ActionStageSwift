@@ -10,12 +10,12 @@ import Foundation
 
 class AddCellActor: LHWActor {
     
-//    override class func initialize() {
-//        LHWActor.registerActorClass(AddCellActor.self)
-//    }
-    
     override class func genericPath() -> String? {
         return "/mg/newcell/@"
+    }
+    
+    override func prepare(options: [String : Any]?) {
+        requestQueueName = "addCellQueue"
     }
     
     override func execute(options: [String: Any]?) {
@@ -28,16 +28,9 @@ class AddCellActor: LHWActor {
         }
         
         ActionStageInstance.dispatchResource(path: path, resource: text, arguments: nil)
-        DispatchQueue.global().asyncAfter(deadline: .now() + 0.1) { [weak self] in
+        DispatchQueue.global().asyncAfter(deadline: .now() + 1.0) { [weak self] in
             guard let `self` = self else { return }
             ActionStageInstance.actionCompleted(self.path)
         }
-    }
-    
-    deinit {
-        Logger.debug("\(self) dealloced")
-    }
-    override func watcherJoined(watcherHandler: LHWHandler, options: [String : Any]?, waitingInActorQueue: Bool) {
-//        Logger.debug("joined handler: \(watcherHandler), options: \(options ?? [:]), path: \(path)")
     }
 }

@@ -88,7 +88,7 @@ public final class LHWHandler {
     }
     
     public func receiveActorMessage(path: String, messageType: String? = nil, message: Any? = nil) {
-        _delegate?.actorMessageReceived(path: path, messageType: messageType, message: message)
+        delegate?.actorMessageReceived(path: path, messageType: messageType, message: message)
         if releaseOnMainThread && !Thread.isMainThread {
             DispatchQueue.main.async {
                 _ = self._delegate.self

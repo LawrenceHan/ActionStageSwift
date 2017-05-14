@@ -44,17 +44,17 @@ public class LHWFilters {
 /// Filter is an abstract base class for other filters
 public class LHWFilter {
     public enum TargetType {
-        case Path(LHWFilter.ComparisonType)
-        case Function(LHWFilter.ComparisonType)
-        case Message(LHWFilter.ComparisonType)
+        case path(LHWFilter.ComparisonType)
+        case function(LHWFilter.ComparisonType)
+        case message(LHWFilter.ComparisonType)
     }
     
     public enum ComparisonType {
-        case StartsWith([String], Bool)
-        case Contains([String], Bool)
-        case Excludes([String], Bool)
-        case EndsWith([String], Bool)
-        case Equals([String], Bool)
+        case startsWith([String], Bool)
+        case contains([String], Bool)
+        case excludes([String], Bool)
+        case endsWith([String], Bool)
+        case equals([String], Bool)
     }
     
     let targetType: LHWFilter.TargetType
@@ -98,13 +98,13 @@ public class CompareFilter: LHWFilter, LHWFilterType {
         
         let comparisonType: LHWFilter.ComparisonType?
         switch self.getTarget() {
-        case let .Function(comparison):
+        case let .function(comparison):
             comparisonType = comparison
             
-        case let .Path(comparison):
+        case let .path(comparison):
             comparisonType = comparison
             
-        case let .Message(comparison):
+        case let .message(comparison):
             comparisonType = comparison
             
             /*default:
@@ -124,31 +124,31 @@ public class CompareFilter: LHWFilter, LHWFilterType {
         
         let matches: Bool
         switch filterComparisonType {
-        case let .Contains(strings, caseSensitive):
+        case let .contains(strings, caseSensitive):
             matches = !strings.filter { string in
                 return caseSensitive ? value.contains(string) :
                     value.lowercased().contains(string.lowercased())
                 }.isEmpty
             
-        case let .Excludes(strings, caseSensitive):
+        case let .excludes(strings, caseSensitive):
             matches = !strings.filter { string in
                 return caseSensitive ? !value.contains(string) :
                     !value.lowercased().contains(string.lowercased())
                 }.isEmpty
             
-        case let .StartsWith(strings, caseSensitive):
+        case let .startsWith(strings, caseSensitive):
             matches = !strings.filter { string in
                 return caseSensitive ? value.hasPrefix(string) :
                     value.lowercased().hasPrefix(string.lowercased())
                 }.isEmpty
             
-        case let .EndsWith(strings, caseSensitive):
+        case let .endsWith(strings, caseSensitive):
             matches = !strings.filter { string in
                 return caseSensitive ? value.hasSuffix(string) :
                     value.lowercased().hasSuffix(string.lowercased())
                 }.isEmpty
             
-        case let .Equals(strings, caseSensitive):
+        case let .equals(strings, caseSensitive):
             matches = !strings.filter { string in
                 return caseSensitive ? value == string :
                     value.lowercased() == string.lowercased()
@@ -162,7 +162,7 @@ public class CompareFilter: LHWFilter, LHWFilterType {
         guard let filterComparisonType = self.filterComparisonType else { return false }
         
         switch filterComparisonType {
-        case .Excludes(_, _):
+        case .excludes(_, _):
             return true
         default:
             return false
@@ -174,27 +174,27 @@ public class CompareFilter: LHWFilter, LHWFilterType {
 public class FunctionFilterFactory {
     public static func startsWith(_ prefixes: String..., caseSensitive: Bool = false,
                                   required: Bool = false, minLevel: ActionStageSwift.Level = .verbose) -> LHWFilterType {
-        return CompareFilter(.Function(.StartsWith(prefixes, caseSensitive)), required: required, minLevel: minLevel)
+        return CompareFilter(.function(.startsWith(prefixes, caseSensitive)), required: required, minLevel: minLevel)
     }
     
     public static func contains(_ strings: String..., caseSensitive: Bool = false,
                                 required: Bool = false, minLevel: ActionStageSwift.Level = .verbose) -> LHWFilterType {
-        return CompareFilter(.Function(.Contains(strings, caseSensitive)), required: required, minLevel: minLevel)
+        return CompareFilter(.function(.contains(strings, caseSensitive)), required: required, minLevel: minLevel)
     }
     
     public static func excludes(_ strings: String..., caseSensitive: Bool = false,
                                 required: Bool = false, minLevel: ActionStageSwift.Level = .verbose) -> LHWFilterType {
-        return CompareFilter(.Function(.Excludes(strings, caseSensitive)), required: required, minLevel: minLevel)
+        return CompareFilter(.function(.excludes(strings, caseSensitive)), required: required, minLevel: minLevel)
     }
     
     public static func endsWith(_ suffixes: String..., caseSensitive: Bool = false,
                                 required: Bool = false, minLevel: ActionStageSwift.Level = .verbose) -> LHWFilterType {
-        return CompareFilter(.Function(.EndsWith(suffixes, caseSensitive)), required: required, minLevel: minLevel)
+        return CompareFilter(.function(.endsWith(suffixes, caseSensitive)), required: required, minLevel: minLevel)
     }
     
     public static func equals(_ strings: String..., caseSensitive: Bool = false,
                               required: Bool = false, minLevel: ActionStageSwift.Level = .verbose) -> LHWFilterType {
-        return CompareFilter(.Function(.Equals(strings, caseSensitive)), required: required, minLevel: minLevel)
+        return CompareFilter(.function(.equals(strings, caseSensitive)), required: required, minLevel: minLevel)
     }
 }
 
@@ -202,27 +202,27 @@ public class FunctionFilterFactory {
 public class MessageFilterFactory {
     public static func startsWith(_ prefixes: String..., caseSensitive: Bool = false,
                                   required: Bool = false, minLevel: ActionStageSwift.Level = .verbose) -> LHWFilterType {
-        return CompareFilter(.Message(.StartsWith(prefixes, caseSensitive)), required: required, minLevel: minLevel)
+        return CompareFilter(.message(.startsWith(prefixes, caseSensitive)), required: required, minLevel: minLevel)
     }
     
     public static func contains(_ strings: String..., caseSensitive: Bool = false,
                                 required: Bool = false, minLevel: ActionStageSwift.Level = .verbose) -> LHWFilterType {
-        return CompareFilter(.Message(.Contains(strings, caseSensitive)), required: required, minLevel: minLevel)
+        return CompareFilter(.message(.contains(strings, caseSensitive)), required: required, minLevel: minLevel)
     }
     
     public static func excludes(_ strings: String..., caseSensitive: Bool = false,
                                 required: Bool = false, minLevel: ActionStageSwift.Level = .verbose) -> LHWFilterType {
-        return CompareFilter(.Message(.Excludes(strings, caseSensitive)), required: required, minLevel: minLevel)
+        return CompareFilter(.message(.excludes(strings, caseSensitive)), required: required, minLevel: minLevel)
     }
     
     public static func endsWith(_ suffixes: String..., caseSensitive: Bool = false,
                                 required: Bool = false, minLevel: ActionStageSwift.Level = .verbose) -> LHWFilterType {
-        return CompareFilter(.Message(.EndsWith(suffixes, caseSensitive)), required: required, minLevel: minLevel)
+        return CompareFilter(.message(.endsWith(suffixes, caseSensitive)), required: required, minLevel: minLevel)
     }
     
     public static func equals(_ strings: String..., caseSensitive: Bool = false,
                               required: Bool = false, minLevel: ActionStageSwift.Level = .verbose) -> LHWFilterType {
-        return CompareFilter(.Message(.Equals(strings, caseSensitive)), required: required, minLevel: minLevel)
+        return CompareFilter(.message(.equals(strings, caseSensitive)), required: required, minLevel: minLevel)
     }
 }
 
@@ -230,27 +230,27 @@ public class MessageFilterFactory {
 public class PathFilterFactory {
     public static func startsWith(_ prefixes: String..., caseSensitive: Bool = false,
                                   required: Bool = false, minLevel: ActionStageSwift.Level = .verbose) -> LHWFilterType {
-        return CompareFilter(.Path(.StartsWith(prefixes, caseSensitive)), required: required, minLevel: minLevel)
+        return CompareFilter(.path(.startsWith(prefixes, caseSensitive)), required: required, minLevel: minLevel)
     }
     
     public static func contains(_ strings: String..., caseSensitive: Bool = false,
                                 required: Bool = false, minLevel: ActionStageSwift.Level = .verbose) -> LHWFilterType {
-        return CompareFilter(.Path(.Contains(strings, caseSensitive)), required: required, minLevel: minLevel)
+        return CompareFilter(.path(.contains(strings, caseSensitive)), required: required, minLevel: minLevel)
     }
     
     public static func excludes(_ strings: String..., caseSensitive: Bool = false,
                                 required: Bool = false, minLevel: ActionStageSwift.Level = .verbose) -> LHWFilterType {
-        return CompareFilter(.Path(.Excludes(strings, caseSensitive)), required: required, minLevel: minLevel)
+        return CompareFilter(.path(.excludes(strings, caseSensitive)), required: required, minLevel: minLevel)
     }
     
     public static func endsWith(_ suffixes: String..., caseSensitive: Bool = false,
                                 required: Bool = false, minLevel: ActionStageSwift.Level = .verbose) -> LHWFilterType {
-        return CompareFilter(.Path(.EndsWith(suffixes, caseSensitive)), required: required, minLevel: minLevel)
+        return CompareFilter(.path(.endsWith(suffixes, caseSensitive)), required: required, minLevel: minLevel)
     }
     
     public static func equals(_ strings: String..., caseSensitive: Bool = false,
                               required: Bool = false, minLevel: ActionStageSwift.Level = .verbose) -> LHWFilterType {
-        return CompareFilter(.Path(.Equals(strings, caseSensitive)), required: required, minLevel: minLevel)
+        return CompareFilter(.path(.equals(strings, caseSensitive)), required: required, minLevel: minLevel)
     }
 }
 
@@ -262,13 +262,13 @@ extension LHWFilter.TargetType : Equatable {
 public func == (lhs: LHWFilter.TargetType, rhs: LHWFilter.TargetType) -> Bool {
     switch (lhs, rhs) {
         
-    case (.Path(_), .Path(_)):
+    case (.path(_), .path(_)):
         return true
         
-    case (.Function(_), .Function(_)):
+    case (.function(_), .function(_)):
         return true
         
-    case (.Message(_), .Message(_)):
+    case (.message(_), .message(_)):
         return true
         
     default:

@@ -13,11 +13,74 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
 
-
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         LHWActor.registerActorClass(AddCellActor.self)
+        
+//        let stageQueueSpecific = "com.hanguang.app.ActionStageSwift.StageDispatchQueue"
+//        let stageQueueSpecificKey = DispatchSpecificKey<String>()
+//        let mainStageQueue: DispatchQueue
+//        let globalStageQueue: DispatchQueue
+//        let highPriorityStageQueue: DispatchQueue
+//        
+//        
+//        var str1: [String] = []
+//        var str2: [String] = []
+//        for i in 0..<30 {
+//            str1.append("\(i)")
+//        }
+//        let item1: [String] = str1
+//        
+//        for i in 30..<60 {
+//            str2.append("\(i)")
+//        }
+//        let item2: [String] = str2
+//        
+//        for text in item1 {
+//            globalGraphQueue.async {
+//                print(text)
+//            }
+//        }
+//        
+//        for text in item2 {
+//            highPriorityGraphQueue.async {
+//                print(text)
+//            }
+//        }
+        
+//        let house1Folks = ["Joe", "Jack", "Jill"];
+//        let house2Folks = ["Irma", "Irene", "Ian"];
+//        
+//        let partyLine = DispatchQueue(label: "party line")
+//        let house1Queue = DispatchQueue(label: "house 1", attributes: .concurrent, target: partyLine)
+//        let house2Queue = DispatchQueue(label: "house 2", attributes: .concurrent, target: partyLine)
+//        
+//        for caller in house1Folks {
+//            house1Queue.async { [unowned self] in
+//                self.makeCall(queue: house1Queue, caller: caller, callees: house2Folks)
+//            }
+//        }
+//        
+//        for caller in house2Folks {
+//            house2Queue.async { [unowned self] in
+//                self.makeCall(queue: house1Queue, caller: caller, callees: house1Folks)
+//            }
+//        }
+        
         return true
+    }
+    
+    func makeCall(queue: DispatchQueue, caller: String, callees: [String]) {
+        let targetIndex: Int = Int(arc4random()) % callees.count
+        let callee = callees[targetIndex]
+        
+        print("\(caller) is calling \(callee)")
+        sleep(1)
+        print("...\(caller) is done calling \(callee)")
+        
+        queue.asyncAfter(deadline: .now() + (Double(Int(arc4random()) % 1000)) * 0.001) { [unowned self] in
+            self.makeCall(queue: queue, caller: caller, callees: callees)
+        }
     }
 
     func applicationWillResignActive(_ application: UIApplication) {

@@ -29,6 +29,11 @@ class SecondTableViewController: UITableViewController, LHWWatcher {
         // Dispose of any resources that can be recreated.
     }
 
+    func addCell() {
+        let options = ["text": "new cell (2)"]
+        ActionStageInstance.requestActor(path: "/mg/newcell/(12)", options: options, watcher: self)
+    }
+    
     // MARK: - Table view data source
 
     override func numberOfSections(in tableView: UITableView) -> Int {
@@ -61,6 +66,14 @@ class SecondTableViewController: UITableViewController, LHWWatcher {
         }
     }
 
+    func actorMessageReceived(path: String, messageType: String?, message: Any?) {
+        if path == "/mg/newcell/(11)" {
+            LHWDispatchOnMainThread {
+                self.addCell()
+            }
+        }
+    }
+    
     /*
     // Override to support conditional editing of the table view.
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {

@@ -18,21 +18,6 @@ class FirstTableViewController: UITableViewController, LHWWatcher {
         actionHandler = LHWHandler(delegate: self)
         ActionStageInstance.watchForPath("/mg/newcell/(11)", watcher: self)
         
-        let colorImage: UIImage
-        
-        UIGraphicsBeginImageContextWithOptions(CGSize(width: 100, height: 44), false, 0.0)
-        let currentContext: CGContext = UIGraphicsGetCurrentContext()!
-        UIColor.blue.setFill()
-        currentContext.fill(CGRect(
-            x: 0,
-            y: 0,
-            width: 100,
-            height: 44
-        ))
-        
-        colorImage = UIGraphicsGetImageFromCurrentImageContext()!
-        UIGraphicsEndImageContext()
-        
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(showTest))
     }
     
@@ -41,8 +26,8 @@ class FirstTableViewController: UITableViewController, LHWWatcher {
         ActionStageInstance.removeWatcher(self)
     }
     
-    @IBAction func addCell(_ sender: UIBarButtonItem) {
-        let options = ["text": "new cell \(array.count+1)"]
+    func addCell() {
+        let options = ["text": "new cell (1)"]
         ActionStageInstance.requestActor(path: "/mg/newcell/(11)", options: options, watcher: self)
 //        ActionStageInstance.requestActor(path: "/mg/newcell/(11)", options: options, watcher: self)
 //        ActionStageInstance.requestActor(path: "/mg/newcell/(11)", options: options, watcher: self)
@@ -96,6 +81,14 @@ class FirstTableViewController: UITableViewController, LHWWatcher {
                 self.tableView.reloadData()
 //                let filePaths = Logger.getFilePaths(count: 5)
 //                Logger.debug(filePaths)
+            }
+        }
+    }
+    
+    func actorMessageReceived(path: String, messageType: String?, message: Any?) {
+        if path == "/mg/newcell/(11)" {
+            LHWDispatchOnMainThread {
+                self.addCell()
             }
         }
     }
