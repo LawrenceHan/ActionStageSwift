@@ -39,6 +39,10 @@ public protocol LHWWatcher: class {
 }
 
 public extension LHWWatcher {
+    var actionHandler: LHWHandler? {
+        return LHWHandler(delegate: self)
+    }
+    
     func actorCompleted(status: LHWActionStageStatus, path: String, result: Any?) {
     }
     
