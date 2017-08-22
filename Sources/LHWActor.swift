@@ -46,7 +46,7 @@ open class LHWActor {
     
     public class func registerActorClass(_ requestActorClass: LHWActor.Type) {
         guard let genericPath = requestActorClass.genericPath() else {
-            Logger.error("LHWActor.registerActorClass: genericPath is nil")
+            print("===== error: LHWActor.registerActorClass: genericPath is nil")
             return
         }
         registeredRequestActors[genericPath] = requestActorClass
@@ -63,7 +63,7 @@ open class LHWActor {
     }
     
     open class func genericPath() -> String? {
-        Logger.error("LHWActor.genericPath: no default implementation provided")
+        print("===== error: LHWActor.genericPath: no default implementation provided")
         return nil
     }
     

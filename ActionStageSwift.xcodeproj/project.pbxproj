@@ -32,7 +32,7 @@
 
 /* Begin PBXFileReference section */
 		021305D71E72AEC700FA05E2 /* AddCellActor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = AddCellActor.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
-		021306281E75303B00FA05E2 /* LHWActionStage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LHWActionStage.swift; sourceTree = "<group>"; };
+		021306281E75303B00FA05E2 /* LHWActionStage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = LHWActionStage.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		021306291E75303B00FA05E2 /* LHWActor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LHWActor.swift; sourceTree = "<group>"; };
 		0213062A1E75303B00FA05E2 /* LHWCommon.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LHWCommon.swift; sourceTree = "<group>"; };
 		0213062B1E75303B00FA05E2 /* LHWGraphNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LHWGraphNode.swift; sourceTree = "<group>"; };
@@ -46,7 +46,7 @@
 		0233BF311E7272F9001168D5 /* Launch Screen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = "Launch Screen.storyboard"; path = "../Launch Screen.storyboard"; sourceTree = "<group>"; };
 		02500AD11E7EC7AD002C188E /* LHWLog.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LHWLog.swift; sourceTree = "<group>"; };
 		02500AD31E7FCFC6002C188E /* MyPlayground.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = MyPlayground.playground; sourceTree = "<group>"; };
-		02500AD41E7FECB2002C188E /* LHWLogFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LHWLogFilter.swift; sourceTree = "<group>"; };
+		02500AD41E7FECB2002C188E /* LHWLogFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = LHWLogFilter.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		02AD24C21E6EA17D00B18028 /* ActionStageSwift.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ActionStageSwift.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		02AD24C51E6EA17D00B18028 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		02AD24C71E6EA17D00B18028 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };

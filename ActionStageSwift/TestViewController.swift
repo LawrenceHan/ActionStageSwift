@@ -41,7 +41,7 @@ class TestViewController: UIViewController, LHWWatcher {
     }
     
     func actorCompleted(status: LHWActionStageStatus, path: String, result: Any?) {
-        Logger.debug("\(path) is done")
+        print("\(path) is done")
     }
     
     deinit {

@@ -69,7 +69,7 @@ class FirstTableViewController: UITableViewController, LHWWatcher {
  
 
     func actorCompleted(status: LHWActionStageStatus, path: String, result: Any?) {
-        Logger.debug("\(path) is done")
+        print("\(path) is done")
     }
     
     func actionStageResourceDispatched(path: String, resource: Any?, arguments: Any?) {
@@ -80,7 +80,7 @@ class FirstTableViewController: UITableViewController, LHWWatcher {
             LHWDispatchOnMainThread {
                 self.tableView.reloadData()
 //                let filePaths = Logger.getFilePaths(count: 5)
-//                Logger.debug(filePaths)
+//                print(filePaths)
             }
         }
     }
