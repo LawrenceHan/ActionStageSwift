@@ -27,10 +27,10 @@ class AddCellActor: LHWActor {
             return
         }
         
-        ActionStageInstance.dispatchResource(path: path, resource: text, arguments: nil)
+        Actor.dispatchResource(path: path, resource: text, arguments: nil)
         DispatchQueue.global().asyncAfter(deadline: .now() + 1.0) { [weak self] in
             guard let `self` = self else { return }
-            ActionStageInstance.actionCompleted(self.path)
+            Actor.actionCompleted(self.path)
         }
     }
 }

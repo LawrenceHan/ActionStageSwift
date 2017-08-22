@@ -16,23 +16,23 @@ class FirstTableViewController: UITableViewController, LHWWatcher {
     override func viewDidLoad() {
         super.viewDidLoad()
         actionHandler = LHWHandler(delegate: self)
-        ActionStageInstance.watchForPath("/mg/newcell/(11)", watcher: self)
+        Actor.watchForPath("/mg/newcell/(11)", watcher: self)
         
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(showTest))
     }
     
     deinit {
         actionHandler?.reset()
-        ActionStageInstance.removeWatcher(self)
+        Actor.removeWatcher(self)
     }
     
     func addCell() {
         let options = ["text": "new cell (1)"]
-        ActionStageInstance.requestActor(path: "/mg/newcell/(11)", options: options, watcher: self)
-//        ActionStageInstance.requestActor(path: "/mg/newcell/(11)", options: options, watcher: self)
-//        ActionStageInstance.requestActor(path: "/mg/newcell/(11)", options: options, watcher: self)
-//        ActionStageInstance.requestActor(path: "/mg/newcell/(11)", options: options, watcher: self)
-//        ActionStageInstance.requestActor(path: "/mg/newcell/(11)", options: options, watcher: self)
+        Actor.requestActor(path: "/mg/newcell/(11)", options: options, watcher: self)
+//        Actor.requestActor(path: "/mg/newcell/(11)", options: options, watcher: self)
+//        Actor.requestActor(path: "/mg/newcell/(11)", options: options, watcher: self)
+//        Actor.requestActor(path: "/mg/newcell/(11)", options: options, watcher: self)
+//        Actor.requestActor(path: "/mg/newcell/(11)", options: options, watcher: self)
     }
 
     func showTest(_ sender: UIBarButtonItem) {

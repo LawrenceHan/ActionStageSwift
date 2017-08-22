@@ -19,7 +19,7 @@ class TestViewController: UIViewController, LHWWatcher {
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(notify))
         
         actionHandler = LHWHandler(delegate: self)
-        ActionStageInstance.watchForPath("/mg/newcell/(11)", watcher: self)
+        Actor.watchForPath("/mg/newcell/(11)", watcher: self)
 
     }
 
@@ -28,14 +28,14 @@ class TestViewController: UIViewController, LHWWatcher {
     }
 
     func notify(_ sender: UIBarButtonItem) {
-        ActionStageInstance.dispatchMessageToWatchers(path: "/mg/newcell/(11)")
+        Actor.dispatchMessageToWatchers(path: "/mg/newcell/(11)")
     }
     
     func actorMessageReceived(path: String, messageType: String?, message: Any?) {
         if path == "/mg/newcell/(11)" {
             LHWDispatchOnMainThread {
                 let options = ["text": "new cell (3)"]
-                ActionStageInstance.requestActor(path: "/mg/newcell/(13)", options: options, watcher: self)
+                Actor.requestActor(path: "/mg/newcell/(13)", options: options, watcher: self)
             }
         }
     }
@@ -46,6 +46,6 @@ class TestViewController: UIViewController, LHWWatcher {
     
     deinit {
         actionHandler?.reset()
-        ActionStageInstance.removeWatcher(self)
+        Actor.removeWatcher(self)
     }
 }

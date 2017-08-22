@@ -16,12 +16,12 @@ class SecondTableViewController: UITableViewController, LHWWatcher {
     override func viewDidLoad() {
         super.viewDidLoad()
         actionHandler = LHWHandler(delegate: self)
-        ActionStageInstance.watchForGenericPath("/mg/newcell/@", watcher: self)
+        Actor.watchForGenericPath("/mg/newcell/@", watcher: self)
     }
 
     deinit {
         actionHandler?.reset()
-        ActionStageInstance.removeWatcher(self)
+        Actor.removeWatcher(self)
     }
     
     override func didReceiveMemoryWarning() {
@@ -31,7 +31,7 @@ class SecondTableViewController: UITableViewController, LHWWatcher {
 
     func addCell() {
         let options = ["text": "new cell (2)"]
-        ActionStageInstance.requestActor(path: "/mg/newcell/(12)", options: options, watcher: self)
+        Actor.requestActor(path: "/mg/newcell/(12)", options: options, watcher: self)
     }
     
     // MARK: - Table view data source
