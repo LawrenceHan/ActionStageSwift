@@ -153,8 +153,21 @@ public final class LHWActionStage {
         return genericPath
     }
     
-    public func requestActor(path: String, options: [String: Any]?, flags: Int = 0, watcher: LHWWatcher) {
-        _requestGeneric(joinOnly: false, inCurrentQueue: false, path: path, options: options, flags: flags, watcher: watcher)
+    public func requestActor(
+        path: String,
+        options: [String: Any]? = nil,
+        flags: Int = 0,
+        watcher: LHWWatcher,
+        completion: ((String, Any?, Any?) -> Void)? = nil) {
+        _requestGeneric(
+            joinOnly: false,
+            inCurrentQueue: false,
+            path: path, options:
+            options,
+            flags: flags,
+            watcher: watcher,
+            completion: completion
+        )
     }
     
     public func changeActorPriority(path: String) {
@@ -204,7 +217,7 @@ public final class LHWActionStage {
         }
         
         for path in rejoinPaths {
-            _requestGeneric(joinOnly: true, inCurrentQueue: true, path: path, options: [:], flags: 0, watcher: watcher)
+            _requestGeneric(joinOnly: true, inCurrentQueue: true, path: path, options: [:], flags: 0, watcher: watcher, completion: nil)
         }
         
         return rejoinPaths
@@ -711,7 +724,14 @@ public final class LHWActionStage {
         }
     }
     
-    private func _requestGeneric(joinOnly: Bool, inCurrentQueue: Bool, path: String, options: [String: Any]?, flags: Int, watcher: LHWWatcher) {
+    private func _requestGeneric(
+        joinOnly: Bool,
+        inCurrentQueue: Bool,
+        path: String,
+        options: [String: Any]?,
+        flags: Int,
+        watcher: LHWWatcher,
+        completion: ((String, Any?, Any?) -> Void)?) {
         guard let actionHandler = watcher.actionHandler else {
             print("===== warning: actionHandler is nil")
             return
@@ -770,7 +790,7 @@ public final class LHWActionStage {
                 }
                 
                 if executeNow {
-                    requestActor.execute(options: options)
+                    requestActor.execute(options: options, completion: completion)
                 } else {
                     requestActor.storedOptions = options
                 }

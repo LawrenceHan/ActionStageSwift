@@ -17,6 +17,7 @@
 		021306371E75303B00FA05E2 /* LHWTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0213062E1E75303B00FA05E2 /* LHWTimer.swift */; };
 		021306381E75303B00FA05E2 /* LHWWatcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0213062F1E75303B00FA05E2 /* LHWWatcher.swift */; };
 		021306391E75303B00FA05E2 /* LHWWeakProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 021306301E75303B00FA05E2 /* LHWWeakProxy.swift */; };
+		02192F0F1F4C01A00055329F /* BlockActor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02192F0E1F4C01A00055329F /* BlockActor.swift */; };
 		0233BF261E7257E2001168D5 /* FirstTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0233BF251E7257E2001168D5 /* FirstTableViewController.swift */; };
 		0233BF281E7257E9001168D5 /* SecondTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0233BF271E7257E9001168D5 /* SecondTableViewController.swift */; };
 		0233BF321E7272F9001168D5 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0233BF311E7272F9001168D5 /* Launch Screen.storyboard */; };
@@ -41,6 +42,7 @@
 		0213062E1E75303B00FA05E2 /* LHWTimer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LHWTimer.swift; sourceTree = "<group>"; };
 		0213062F1E75303B00FA05E2 /* LHWWatcher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LHWWatcher.swift; sourceTree = "<group>"; };
 		021306301E75303B00FA05E2 /* LHWWeakProxy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LHWWeakProxy.swift; sourceTree = "<group>"; };
+		02192F0E1F4C01A00055329F /* BlockActor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlockActor.swift; sourceTree = "<group>"; };
 		0233BF251E7257E2001168D5 /* FirstTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = FirstTableViewController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		0233BF271E7257E9001168D5 /* SecondTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = SecondTableViewController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		0233BF311E7272F9001168D5 /* Launch Screen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = "Launch Screen.storyboard"; path = "../Launch Screen.storyboard"; sourceTree = "<group>"; };
@@ -116,6 +118,7 @@
 				02AD24CC1E6EA17D00B18028 /* Assets.xcassets */,
 				02AD24D11E6EA17D00B18028 /* Info.plist */,
 				021305D71E72AEC700FA05E2 /* AddCellActor.swift */,
+				02192F0E1F4C01A00055329F /* BlockActor.swift */,
 				02500AD31E7FCFC6002C188E /* MyPlayground.playground */,
 				02D33F1C1E972B190076E81C /* TestButton.swift */,
 			);
@@ -206,6 +209,7 @@
 				021305D81E72AEC700FA05E2 /* AddCellActor.swift in Sources */,
 				0233BF261E7257E2001168D5 /* FirstTableViewController.swift in Sources */,
 				02AD24C81E6EA17D00B18028 /* ViewController.swift in Sources */,
+				02192F0F1F4C01A00055329F /* BlockActor.swift in Sources */,
 				021306341E75303B00FA05E2 /* LHWGraphNode.swift in Sources */,
 				021306321E75303B00FA05E2 /* LHWActor.swift in Sources */,
 				021306381E75303B00FA05E2 /* LHWWatcher.swift in Sources */,

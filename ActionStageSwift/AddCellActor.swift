@@ -17,8 +17,8 @@ class AddCellActor: LHWActor {
     override func prepare(options: [String : Any]?) {
         requestQueueName = "addCellQueue"
     }
-    
-    override func execute(options: [String: Any]?) {
+
+    override func execute(options: [String: Any]?, completion: ((String, Any?, Any?) -> Void)?) {
         guard let options = options else {
             return
         }

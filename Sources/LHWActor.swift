@@ -72,7 +72,7 @@ open class LHWActor {
     open func prepare(options: [String: Any]?) {
     }
     
-    open func execute(options: [String: Any]?) {
+    open func execute(options: [String: Any]?, completion: ((String, Any?, Any?) -> Void)? = nil) {
     }
     
     open func cancel() {
