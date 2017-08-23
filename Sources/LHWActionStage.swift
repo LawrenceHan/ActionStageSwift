@@ -892,7 +892,7 @@ public final class LHWActionStage {
         activeRequests.removeValue(forKey: path)
         
         requestActor.cancel()
-        print("===== Cancelled request to \"\(path)\"")
+        print("===== cancelled request to \"\(path)\"")
         
         guard let requestQueueName = requestActor.requestQueueName else {
             return
