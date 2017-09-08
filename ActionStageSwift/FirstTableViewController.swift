@@ -21,7 +21,7 @@ class FirstTableViewController: UITableViewController, LHWWatcher {
             "/mg/block"
             ], watcher: self)
         
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(showTest))
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addCell))
     }
     
     deinit {
@@ -32,6 +32,9 @@ class FirstTableViewController: UITableViewController, LHWWatcher {
     func addCell() {
         let options = ["text": "new cell (1)"]
         Actor.requestActor(path: "/mg/newcell/(11)", options: options, watcher: self)
+        Actor.requestActor(path: "/mg/newcell/(12)", options: options, watcher: self)
+        Actor.requestActor(path: "/mg/newcell/(13)", options: options, watcher: self)
+        Actor.requestActor(path: "/mg/newcell/(14)", options: options, watcher: self)
     }
 
     func showTest(_ sender: UIBarButtonItem) {
