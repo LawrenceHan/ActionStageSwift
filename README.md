@@ -1,3 +1,5 @@
+# Deprecated please use [SwiftActor](https://github.com/LawrenceHan/SwiftActor)
+
 # ActionStageSwift
 A Swift version of ActionStage.
 Actor Model
