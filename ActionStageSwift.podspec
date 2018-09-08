@@ -16,7 +16,7 @@ Pod::Spec.new do |s|
   #
 
   s.name         = "ActionStageSwift"
-  s.version      = "0.1.8"
+  s.version      = "0.1.9"
   s.summary      = "This is a Swift version of ActionStage."
 
   # This description is used to generate tags and improve search results.
@@ -131,6 +131,7 @@ Pod::Spec.new do |s|
   #  you can include multiple dependencies to ensure it works.
 
   s.requires_arc = true
+  s.swift_version = "4.0"
 
   # s.xcconfig = { "HEADER_SEARCH_PATHS" => "$(SDKROOT)/usr/include/libxml2" }
   # s.dependency "JSONKit", "~> 1.4"

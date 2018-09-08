@@ -21,7 +21,7 @@ class FirstTableViewController: UITableViewController, LHWWatcher {
             "/mg/block"
             ], watcher: self)
         
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addCell))
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(showTest))
     }
     
     deinit {
@@ -37,27 +37,27 @@ class FirstTableViewController: UITableViewController, LHWWatcher {
         Actor.requestActor(path: "/mg/newcell/(14)", options: options, watcher: self)
     }
 
-    func showTest(_ sender: UIBarButtonItem) {
-//        let test = TestViewController()
-//        let nav = UINavigationController(rootViewController: test)
-//        present(nav, animated: true, completion: nil)
-        Actor.requestActor(path: "/mg/block", watcher: self) { [unowned self] (path, resource, argument) in
-            let text = resource as! String
-            self.array.append(text)
-            
-            LHWDispatchOnMainThread {
-                self.tableView.reloadData()
-            }
-        }
-        Actor.requestActor(path: "/mg/block", watcher: self) { [unowned self] (path, resource, argument) in
-            let text = resource as! String
-            self.array.append(text)
-            
-            LHWDispatchOnMainThread {
-                self.tableView.reloadData()
-            }
-        }
-        Actor.requestActor(path: "/mg/block", watcher: self)
+    @objc func showTest(_ sender: UIBarButtonItem) {
+        let test = TestViewController()
+        let nav = UINavigationController(rootViewController: test)
+        present(nav, animated: true, completion: nil)
+//        Actor.requestActor(path: "/mg/block", watcher: self) { [unowned self] (path, resource, argument) in
+//            let text = resource as! String
+//            self.array.append(text)
+//
+//            LHWDispatchOnMainThread {
+//                self.tableView.reloadData()
+//            }
+//        }
+//        Actor.requestActor(path: "/mg/block", watcher: self) { [unowned self] (path, resource, argument) in
+//            let text = resource as! String
+//            self.array.append(text)
+//
+//            LHWDispatchOnMainThread {
+//                self.tableView.reloadData()
+//            }
+//        }
+//        Actor.requestActor(path: "/mg/block", watcher: self)
     }
     
     override func didReceiveMemoryWarning() {

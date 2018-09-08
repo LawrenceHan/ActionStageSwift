@@ -14,6 +14,11 @@ class TestViewController: UIViewController, LHWWatcher {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        DispatchQueue.global().asyncAfter(deadline: .now()+3) {
+            print("I'm still here!")
+        }
+        
         view.backgroundColor = UIColor.white
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(dismissVC))
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(notify))
@@ -23,11 +28,11 @@ class TestViewController: UIViewController, LHWWatcher {
 
     }
 
-    func dismissVC() {
+    @objc func dismissVC() {
         dismiss(animated: true, completion: nil)
     }
 
-    func notify(_ sender: UIBarButtonItem) {
+    @objc func notify(_ sender: UIBarButtonItem) {
         Actor.dispatchMessageToWatchers(path: "/mg/newcell/(11)")
     }
     

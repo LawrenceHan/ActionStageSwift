@@ -60,9 +60,9 @@ public final class LHWTimer {
         
         timer = DispatchSource.makeTimerSource(flags: DispatchSource.TimerFlags(rawValue: 0), queue: queue)
         if shouldRepeat {
-            timer?.scheduleRepeating(deadline: .now() + timeout, interval: timeout)
+            timer?.schedule(deadline: .now() + timeout, repeating: timeout)
         } else {
-            timer?.scheduleOneshot(deadline: .now() + timeout)
+            timer?.schedule(deadline: .now() + timeout)
         }
         
         timer?.setEventHandler(handler: { [weak self] in

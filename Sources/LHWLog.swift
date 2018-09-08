@@ -335,12 +335,12 @@ public final class LHWLog {
                     text += String(line) + remainingPhrase
                 case "D":
                     // start of datetime format
-                    text += formatDate(remainingPhrase)
+                    text += formatDate(String(remainingPhrase))
                 case "d":
                     text += remainingPhrase
                 case "Z":
                     // start of datetime format in UTC timezone
-                    text += formatDate(remainingPhrase, timeZone: "UTC")
+                    text += formatDate(String(remainingPhrase), timeZone: "UTC")
                 case "z":
                     text += remainingPhrase
                 case "C":
@@ -465,7 +465,7 @@ public final class LHWLog {
         let endIndex = str.index(str.startIndex,
                                  offsetBy: str.characters.count - 2)
         let range = str.index(str.startIndex, offsetBy: offset)..<endIndex
-        return str[range]
+        return String(str[range])
     }
     
     /// turns dict into JSON-encoded string
