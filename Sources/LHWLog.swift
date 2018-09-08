@@ -283,8 +283,12 @@ public final class LHWLog {
     /// removes the parameters from a function because it looks weird with a single param
     private func stripParams(function: String) -> String {
         var f = function
-        if let indexOfBrace = f.characters.index(of: "(") {
+        if let indexOfBrace = f.find("(") {
+            #if swift(>=4.0)
+            f = String(f[..<indexOfBrace])
+            #else
             f = f.substring(to: indexOfBrace)
+            #endif
         }
         f += "()"
         return f
@@ -461,9 +465,9 @@ public final class LHWLog {
         }
         
         // remove the leading {"key":" from the json string and the final }
-        let offset = key.characters.count + 5
+        let offset = key.count + 5
         let endIndex = str.index(str.startIndex,
-                                 offsetBy: str.characters.count - 2)
+                                 offsetBy: str.count - 2)
         let range = str.index(str.startIndex, offsetBy: offset)..<endIndex
         return String(str[range])
     }
@@ -647,6 +651,44 @@ public final class LHWLog {
             
             return passes
             }.count
+    }
+}
+
+extension String {
+    /// cross-Swift compatible characters count
+    var length: Int {
+        #if swift(>=3.2)
+        return self.count
+        #else
+        return self.characters.count
+        #endif
+    }
+    
+    /// cross-Swift-compatible first character
+    var firstChar: Character? {
+        #if swift(>=3.2)
+        return self.first
+        #else
+        return self.characters.first
+        #endif
+    }
+    
+    /// cross-Swift-compatible last character
+    var lastChar: Character? {
+        #if swift(>=3.2)
+        return self.last
+        #else
+        return self.characters.last
+        #endif
+    }
+    
+    /// cross-Swift-compatible index
+    func find(_ char: Character) ->  Index? {
+        #if swift(>=3.2)
+        return self.index(of: char)
+        #else
+        return self.characters.index(of: char)
+        #endif
     }
 }
 
